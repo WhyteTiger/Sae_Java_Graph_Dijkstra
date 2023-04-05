@@ -4,6 +4,11 @@ public class Sommet {
     private String nom;
     private char type;
 
+    public Sommet(String nom, char type){
+        this.nom = nom;
+        this.type = type;
+    }
+
     public String accesNom() {
         return nom;
     }

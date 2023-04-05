@@ -8,6 +8,15 @@ public class Arrete {
     private Sommet sommet1;
     private Sommet sommet2;
 
+    public Arrete(String nom, double fiabilite, double distance, double duree, Sommet sommet1, Sommet sommet2){
+        this.nom = nom;
+        this.fiabilite = fiabilite;
+        this.distance = distance;
+        this.duree = duree;
+        this.sommet1 = sommet1;
+        this.sommet2 = sommet2;
+    }
+
     public String accesNom() {
         return nom;
     }
