@@ -1,4 +1,4 @@
-package Logiciel;
+package Logiciel.Controleur;
 
 public class Main {
 

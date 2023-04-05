@@ -1,4 +1,4 @@
-package Logiciel;
+package Logiciel.Vue;
 
 public class Graphe {
 }
