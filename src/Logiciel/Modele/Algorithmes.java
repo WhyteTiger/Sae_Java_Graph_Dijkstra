@@ -31,6 +31,15 @@ public class Algorithmes {
             tabDijktra[j][1] = i;
         }
     }
+
+    /**
+     * pas fini
+     * @param listeSommet
+     * @param listeArrete
+     * @param listeV
+     * @param s0
+     * @return
+     */
     public static double[][] dijktra(ArrayList<Sommet> listeSommet, ArrayList<Arrete> listeArrete, double[][] listeV, Sommet s0){
         //Initialisation
         int n = listeSommet.size();
