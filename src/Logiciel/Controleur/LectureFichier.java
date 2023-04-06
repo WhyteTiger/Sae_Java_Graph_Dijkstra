@@ -4,17 +4,15 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class LectureFichier {
-
-    public static void afficher(String nomFichier) {
+public class LectureFichier {public static void afficher(String nomFichier) {
         try {
-            FileReader freader = new FileReader(nomFichier); //mettre le chemin vers le fichier
-            int data = freader.read();
-            while (data != -1) {
-                System.out.print((char) data);
-                data = freader.read();
+            FileReader lecteurf = new FileReader(nomFichier); //mettre le chemin vers le fichier
+            int donees = lecteurf.read();
+            while (donees != -1) {
+                System.out.print((char) donees);
+                donees = lecteurf.read();
             }
-            freader.close();
+            lecteurf.close();
         } catch (FileNotFoundException e) {
             System.out.println("not found");
         } catch (IOException e) {
