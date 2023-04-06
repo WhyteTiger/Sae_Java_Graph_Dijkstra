@@ -11,7 +11,7 @@ public class Algorithmes {
      * @param listeDesSommetsATraiter
      * @return
      */
-    private static ListeSommet ajoutDesSommets(ListeSommet listeDesSommetsATraiter){
+    private static ListeChaineeSommet ajoutDesSommets(ListeChaineeSommet listeDesSommetsATraiter){
         return listeDesSommetsATraiter;
     }
 
@@ -21,7 +21,7 @@ public class Algorithmes {
      * @param tabDijktra
      * @return
      */
-    private static int rechercherDsiMinimal(ListeSommet listeDesSommetsATraiter, double[][] tabDijktra){
+    private static int rechercherDsiMinimal(ListeChaineeSommet listeDesSommetsATraiter, double[][] tabDijktra){
         return 0;
     }
 
@@ -48,13 +48,13 @@ public class Algorithmes {
             tabDijktra[i][0] = INFINI_POSITIF;
         }
         tabDijktra[0][0] = 0;
-        ListeSommet listeDesSommetsATraiter = new ListeSommet();
+        ListeChaineeSommet listeDesSommetsATraiter = new ListeChaineeSommet();
         Algorithmes.ajoutDesSommets(listeDesSommetsATraiter); // marche pas
         //Fin initialisation
 
         while(listeDesSommetsATraiter.accesPremierSommet() != null){
             int i = Algorithmes.rechercherDsiMinimal(listeDesSommetsATraiter, tabDijktra); // marche pas
-            listeDesSommetsATraiter.supprimerALaPosition(i); // marche pas
+            listeDesSommetsATraiter.supprimerALaPosition(i);
             for (Arrete a: listeArrete) {
                 if (a.accesSommet1().equals(s0) || a.accesSommet2().equals(s0)){
                     int j = listeArrete.indexOf(a);

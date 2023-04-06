@@ -16,4 +16,8 @@ public class MaillonSommet {
     public MaillonSommet accesMaillonSuivant() {
         return maillonSuivant;
     }
+
+    public void fixeMaillonSuivant(MaillonSommet maillonSuivant) {
+        this.maillonSuivant = maillonSuivant;
+    }
 }
