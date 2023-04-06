@@ -35,6 +35,32 @@ public class ListeChaineeSommet {
         return null;
     }
 
+    public MaillonSommet accesNiemeSommet(int position){
+        if (position <= this.nombreSommet) {
+            MaillonSommet maillonCourrant = this.premierSommet;
+            int positionCourrante = 1;
+            while (positionCourrante < position) {
+                maillonCourrant = maillonCourrant.accesMaillonSuivant();
+                positionCourrante++;
+            }
+            return maillonCourrant;
+        }
+        return null;
+    }
+
+    public void ajouterSommet(Sommet sommet){
+        MaillonSommet nouveauMaillonSommet = new MaillonSommet(sommet, null);
+        if (this.premierSommet == null){
+            this.premierSommet = nouveauMaillonSommet;
+        } else {
+            MaillonSommet maillonCourrant = this.premierSommet;
+            while (maillonCourrant.accesMaillonSuivant() != null){
+                maillonCourrant.fixeMaillonSuivant(maillonCourrant.accesMaillonSuivant().accesMaillonSuivant());
+            }
+            maillonCourrant.fixeMaillonSuivant(nouveauMaillonSommet);
+        }
+    }
+
     /**
      *
      * @param position position du maillon à supprimer

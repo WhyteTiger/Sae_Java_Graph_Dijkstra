@@ -7,22 +7,34 @@ public class Algorithmes {
     public static int INFINI_POSITIF = Integer.MAX_VALUE;
 
     /**
-     *  /!\ MARCHE PAS /!\
-     * @param listeDesSommetsATraiter
-     * @return
+     *
+     * @param listeSommet liste des sommets qu'on veut copier dans listeDesSommetsATraiter
+     * @return la liste chainee des sommets a traiter
      */
-    private static ListeChaineeSommet ajoutDesSommets(ListeChaineeSommet listeDesSommetsATraiter){
+    private static ListeChaineeSommet ajoutDesSommets(ArrayList<Sommet> listeSommet){
+        ListeChaineeSommet listeDesSommetsATraiter = new ListeChaineeSommet();
+        int n = listeSommet.size();
+        for (int i=1; i<n; i++){
+            listeDesSommetsATraiter.ajouterSommet(listeSommet.get(i));
+        }
         return listeDesSommetsATraiter;
     }
 
     /**
-     * /!\ MARCHE PAS /!\
+     *
      * @param listeDesSommetsATraiter
      * @param tabDijktra
      * @return
      */
     private static int rechercherDsiMinimal(ListeChaineeSommet listeDesSommetsATraiter, double[][] tabDijktra){
-        return 0;
+        int iDsiMinimal = INFINI_POSITIF;
+        int n = listeDesSommetsATraiter.accesNombreSommet();
+        for (int i = 1; i<n; i++){
+            if(tabDijktra[i][0] < iDsiMinimal){
+                iDsiMinimal = i;
+            }
+        }
+        return iDsiMinimal;
     }
 
     public static void relacher(int i, int j, double[][] tabDijktra, double vsisj){
@@ -48,8 +60,7 @@ public class Algorithmes {
             tabDijktra[i][0] = INFINI_POSITIF;
         }
         tabDijktra[0][0] = 0;
-        ListeChaineeSommet listeDesSommetsATraiter = new ListeChaineeSommet();
-        Algorithmes.ajoutDesSommets(listeDesSommetsATraiter); // marche pas
+        ListeChaineeSommet listeDesSommetsATraiter = Algorithmes.ajoutDesSommets(listeSommet);
         //Fin initialisation
 
         while(listeDesSommetsATraiter.accesPremierSommet() != null){
