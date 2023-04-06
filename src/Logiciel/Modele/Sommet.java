@@ -2,9 +2,9 @@ package Logiciel.Modele;
 
 public class Sommet {
     private String nom;
-    private char type;
+    private String type;
 
-    public Sommet(String nom, char type){
+    public Sommet(String nom, String type){
         this.nom = nom;
         this.type = type;
     }
@@ -13,7 +13,7 @@ public class Sommet {
         return nom;
     }
 
-    public char accesType() {
+    public String accesType() {
         return type;
     }
 
@@ -21,7 +21,11 @@ public class Sommet {
         this.nom = nom;
     }
 
-    public void fixeType(char type) {
+    public void fixeType(String type) {
         this.type = type;
+    }
+
+    public String toString(){
+        return this.nom + " "+this.type;
     }
 }
