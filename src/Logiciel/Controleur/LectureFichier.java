@@ -5,15 +5,16 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class LectureFichier {
-    public void lectureFichier() {
+
+    public static void afficher(String nomFichier) {
         try {
-            FileReader reader = new FileReader(""); //mettre le chemin vers le fichier
-            int data = reader.read();
+            FileReader freader = new FileReader(nomFichier); //mettre le chemin vers le fichier
+            int data = freader.read();
             while (data != -1) {
                 System.out.print((char) data);
-                data = reader.read();
+                data = freader.read();
             }
-            reader.close();
+            freader.close();
         } catch (FileNotFoundException e) {
             System.out.println("not found");
         } catch (IOException e) {
