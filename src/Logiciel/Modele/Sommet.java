@@ -1,10 +1,12 @@
 package Logiciel.Modele;
 
+import java.util.List;
+
 public class Sommet {
     private String nom;
-    private char type;
+    private String type;
 
-    public Sommet(String nom, char type){
+    public Sommet(String nom, String type){
         this.nom = nom;
         this.type = type;
     }
@@ -13,7 +15,7 @@ public class Sommet {
         return nom;
     }
 
-    public char accesType() {
+    public String accesType() {
         return type;
     }
 
@@ -21,7 +23,24 @@ public class Sommet {
         this.nom = nom;
     }
 
-    public void fixeType(char type) {
+    public void fixeType(String type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "Sommet{" +
+                "nom='" + nom + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
+
+    public static Sommet recupererViaNom(List<Sommet> listeSommet, String nom){
+        for (Sommet sommet: listeSommet) {
+            if (sommet.accesNom().equals(nom)){
+                return sommet;
+            }
+        }
+        return null;
     }
 }
