@@ -1,5 +1,7 @@
 package Logiciel.Modele;
 
+import java.util.List;
+
 public class Sommet {
     private String nom;
     private String type;
@@ -27,5 +29,14 @@ public class Sommet {
 
     public String toString(){
         return this.nom + " "+this.type;
+    }
+
+    public static Sommet recupererViaNom(List<Sommet> listeSommet, String nom){
+        for (Sommet sommet: listeSommet) {
+            if (sommet.accesNom().equals(nom)){
+                return sommet;
+            }
+        }
+        return null;
     }
 }

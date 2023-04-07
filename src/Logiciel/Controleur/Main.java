@@ -1,11 +1,14 @@
 package Logiciel.Controleur;
 
-import static Logiciel.Controleur.LectureFichier.afficher;
+import Logiciel.Modele.Arrete;
+import Logiciel.Modele.Sommet;
+
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        afficher("C:/Users/emman/OneDrive/Bureau/testChatgptJava.csv");
-
+        List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
+        List<Arrete> listeArrete = LectureFichier.creerListeArrete("Liste_Arrete.csv", listeSommet);
     }
 }
