@@ -25,7 +25,6 @@ public class LectureFichier {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        listeSommet.forEach(System.out::println);
         return listeSommet;
     }
 
@@ -48,7 +47,6 @@ public class LectureFichier {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        listeArrete.forEach(System.out::println);
         return listeArrete;
     }
 }

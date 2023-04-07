@@ -27,8 +27,12 @@ public class Sommet {
         this.type = type;
     }
 
-    public String toString(){
-        return this.nom + " "+this.type;
+    @Override
+    public String toString() {
+        return "Sommet{" +
+                "nom='" + nom + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 
     public static Sommet recupererViaNom(List<Sommet> listeSommet, String nom){

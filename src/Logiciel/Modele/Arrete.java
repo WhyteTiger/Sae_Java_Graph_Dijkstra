@@ -17,6 +17,18 @@ public class Arrete {
         this.sommet2 = sommet2;
     }
 
+    @Override
+    public String toString() {
+        return "Arrete{" +
+                "nom='" + nom + '\'' +
+                ", fiabilite=" + fiabilite +
+                ", distance=" + distance +
+                ", duree=" + duree +
+                ", sommet1=" + sommet1.accesNom() +
+                ", sommet2=" + sommet2.accesNom() +
+                '}';
+    }
+
     public String accesNom() {
         return nom;
     }
