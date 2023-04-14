@@ -2,6 +2,7 @@ package Logiciel.Controleur;
 
 import Logiciel.Modele.Arrete;
 import Logiciel.Modele.Sommet;
+import Logiciel.Vue.FenetrePrincipale;
 
 import java.util.List;
 
@@ -11,11 +12,8 @@ public class Main {
         List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
         List<Arrete> listeArrete = LectureFichier.creerListeArrete("Liste_Arrete.csv", listeSommet);
 
-        for (Sommet sommet: listeSommet) {
-            System.out.println(sommet);
-        }
-        for (Arrete arrete: listeArrete) {
-            System.out.println(arrete);
-        }
+        FenetrePrincipale fenetrePrincipale = new FenetrePrincipale();
+        fenetrePrincipale.pack();
+        fenetrePrincipale.setVisible(true);
     }
 }
