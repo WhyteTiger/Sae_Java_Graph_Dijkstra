@@ -1,10 +1,15 @@
 package Logiciel.Vue;
 
+import Logiciel.Controleur.LectureFichier;
+import Logiciel.Modele.Arrete;
+import Logiciel.Modele.Sommet;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+//import java.io.File;
+import java.util.List;
 
 public class FenetrePrincipale extends JFrame implements ActionListener {
 
@@ -24,6 +29,8 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
     private JLabel lgraphe;
 
     private JLabel ldescription;
+
+    private String str = "";
 
     public FenetrePrincipale(){
         this.initComponent();
@@ -81,7 +88,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
         JPanel pan1 = new JPanel();
         pan1.add(lgraphe);
 
-        JPanel pan2 = new JPanel(new GridLayout(3,1,10,10));
+        JPanel pan2 = new JPanel(new GridLayout(6,1,10,10));
         pan2.add(lChargement);
         pan2.add(option);
         pan2.add(modification);
@@ -101,14 +108,37 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==chargement) {
+            List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
+            List<Arrete> listeArrete = LectureFichier.creerListeArrete("Liste_Arrete.csv", listeSommet);
+
+            if (listeSommet == null){
+                lChargement.setText("Erreur");
+            }else{
+                lChargement.setText("OK");
+            }
+
+            //listeSommet.forEach(System.out::println);
+            //listeArrete.forEach(System.out::println);
+
+            for (Sommet sommet: listeSommet) {
+                this.str = str +"\n"+ sommet.toString();
+            }
+            for (Arrete arrete: listeArrete) {
+                this.str = str +"\n"+ arrete.toString();
+            }
+
+            ldescription.setText(str);
+
+
+            /* exemple pour ouvrir un fichier
             JFileChooser sl = new JFileChooser();
             int resultat = sl.showDialog(this, "ouvrir");
             if (resultat == JFileChooser.APPROVE_OPTION){
                 File f = sl.getSelectedFile();
                 String ch = f.getAbsolutePath();
-                ImageIcon image = new ImageIcon(ch); //test avec une image
-                //description.setIcon(image);
+
             }
+            */
         }
         if(e.getSource()==sauvegarde) {
             System.out.println("Le fichier a bien ete sauvegarder");
