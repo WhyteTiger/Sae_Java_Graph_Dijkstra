@@ -108,6 +108,19 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==chargement) {
+
+            /* exemple pour ouvrir un fichier
+            JFileChooser sl = new JFileChooser();
+            int resultat = sl.showDialog(this, "ouvrir");
+            if (resultat == JFileChooser.APPROVE_OPTION){
+                File f = sl.getSelectedFile();
+                String ch = f.getAbsolutePath();
+
+            }
+
+            Changer ListeSommet.csv par ch
+            */
+
             List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
             List<Arrete> listeArrete = LectureFichier.creerListeArrete("Liste_Arrete.csv", listeSommet);
 
@@ -130,15 +143,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
             ldescription.setText(str);
 
 
-            /* exemple pour ouvrir un fichier
-            JFileChooser sl = new JFileChooser();
-            int resultat = sl.showDialog(this, "ouvrir");
-            if (resultat == JFileChooser.APPROVE_OPTION){
-                File f = sl.getSelectedFile();
-                String ch = f.getAbsolutePath();
-
-            }
-            */
         }
         if(e.getSource()==sauvegarde) {
             System.out.println("Le fichier a bien ete sauvegarder");
