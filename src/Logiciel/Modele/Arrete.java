@@ -1,6 +1,6 @@
 package Logiciel.Modele;
 
-public class Arrete {
+public class Arrete implements Comparable<Arrete>{
     private String nom;
     private double fiabilite;
     private double distance;
@@ -65,5 +65,10 @@ public class Arrete {
     }
     public void fixeSommet2(Sommet sommet2) {
         this.sommet2 = sommet2;
+    }
+
+    @Override
+    public int compareTo(Arrete a) {
+        return this.accesNom().compareTo(a.accesNom());
     }
 }

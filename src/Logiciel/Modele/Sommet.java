@@ -2,7 +2,7 @@ package Logiciel.Modele;
 
 import java.util.List;
 
-public class Sommet {
+public class Sommet implements Comparable<Sommet>{
     private String nom;
     private String type;
 
@@ -42,5 +42,10 @@ public class Sommet {
             }
         }
         return null;
+    }
+
+    @Override
+    public int compareTo(Sommet s) {
+        return this.accesNom().compareTo(s.accesNom());
     }
 }

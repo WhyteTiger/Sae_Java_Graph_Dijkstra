@@ -1,6 +1,7 @@
 package Logiciel.Modele;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Algorithmes {
 
@@ -11,7 +12,7 @@ public class Algorithmes {
      * @param listeSommet liste des sommets qu'on veut copier dans listeDesSommetsATraiter
      * @return la liste chainee des sommets a traiter
      */
-    private static ListeChaineeSommet ajoutDesSommets(ArrayList<Sommet> listeSommet){
+    private static ListeChaineeSommet ajoutDesSommets(List<Sommet> listeSommet){
         ListeChaineeSommet listeDesSommetsATraiter = new ListeChaineeSommet();
         int n = listeSommet.size();
         for (int i=1; i<n; i++){
@@ -37,9 +38,21 @@ public class Algorithmes {
         return iDsiMinimal;
     }
 
-    public static void relacher(int i, int j, double[][] tabDijktra, double vsisj){
-        if (tabDijktra[i][0] > (tabDijktra[j][0]+vsisj)){
-            tabDijktra[j][0] = tabDijktra[i][0] + vsisj;
+    private static double distanceEntreDeuxSommets(int i, int j, ListeChaineeSommet listeDesSommetsATraiter, List<Arrete> listeArrete){
+        double distance = -1;
+        Sommet si = listeDesSommetsATraiter.accesSommetParPosition(i);
+        Sommet sj = listeDesSommetsATraiter.accesSommetParPosition(j);
+        for (Arrete a : listeArrete) {
+            if (a.accesSommet1().equals(si) && a.accesSommet2().equals(sj)){
+                distance = a.accesDistance();
+            }
+        }
+        return distance;
+    }
+
+    public static void relacher(int i, int j, double[][] tabDijktra, ListeChaineeSommet listeDesSommetsATraiter, List<Arrete> listeArrete){
+        if (tabDijktra[j][0] > (tabDijktra[i][0]+ Algorithmes.distanceEntreDeuxSommets(i, j, listeDesSommetsATraiter, listeArrete))){
+            tabDijktra[j][0] = tabDijktra[i][0] + Algorithmes.distanceEntreDeuxSommets(i, j, listeDesSommetsATraiter, listeArrete);
             tabDijktra[j][1] = i;
         }
     }
@@ -48,11 +61,10 @@ public class Algorithmes {
      * pas fini
      * @param listeSommet
      * @param listeArrete
-     * @param listeV
      * @param s0
      * @return
      */
-    public static double[][] dijktra(ArrayList<Sommet> listeSommet, ArrayList<Arrete> listeArrete, double[][] listeV, Sommet s0){
+    public static double[][] dijktra(List<Sommet> listeSommet, List<Arrete> listeArrete, Sommet s0){
         //Initialisation
         int n = listeSommet.size();
         double[][] tabDijktra = new double[n][2];
@@ -64,12 +76,16 @@ public class Algorithmes {
         //Fin initialisation
 
         while(listeDesSommetsATraiter.accesPremierSommet() != null){
-            int i = Algorithmes.rechercherDsiMinimal(listeDesSommetsATraiter, tabDijktra); // marche pas
+            int i = Algorithmes.rechercherDsiMinimal(listeDesSommetsATraiter, tabDijktra);
             listeDesSommetsATraiter.supprimerALaPosition(i);
             for (Arrete a: listeArrete) {
-                if (a.accesSommet1().equals(s0) || a.accesSommet2().equals(s0)){
-                    int j = listeArrete.indexOf(a);
-                    Algorithmes.relacher(i, j, tabDijktra, listeV[i][j]);
+                if (a.accesSommet1().equals(s0)){
+                    int j = listeDesSommetsATraiter.accesPositionParSommet(a.accesSommet2());
+                    Algorithmes.relacher(i, j, tabDijktra, listeDesSommetsATraiter, listeArrete);
+                }
+                if (a.accesSommet2().equals(s0)){
+                    int j = listeDesSommetsATraiter.accesPositionParSommet(a.accesSommet1());
+                    Algorithmes.relacher(i, j, tabDijktra, listeDesSommetsATraiter, listeArrete);
                 }
             }
         }

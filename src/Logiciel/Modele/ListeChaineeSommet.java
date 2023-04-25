@@ -35,7 +35,15 @@ public class ListeChaineeSommet {
         return null;
     }
 
-    public MaillonSommet accesNiemeSommet(int position){
+    private Sommet accesSommetParMaillonSommet(MaillonSommet maillonSommet){
+        MaillonSommet maillonCourrant = this.premierSommet;
+        while(!maillonCourrant.equals(maillonSommet)){
+            maillonCourrant = maillonSommet.accesMaillonSuivant();
+        }
+        return maillonCourrant.accesSommet();
+    }
+
+    public Sommet accesSommetParPosition(int position){
         if (position <= this.nombreSommet) {
             MaillonSommet maillonCourrant = this.premierSommet;
             int positionCourrante = 1;
@@ -43,9 +51,22 @@ public class ListeChaineeSommet {
                 maillonCourrant = maillonCourrant.accesMaillonSuivant();
                 positionCourrante++;
             }
-            return maillonCourrant;
+            return this.accesSommetParMaillonSommet(maillonCourrant);
         }
         return null;
+    }
+
+    public int accesPositionParSommet(Sommet sommet){
+        if (this.nombreSommet > 0) {
+            MaillonSommet maillonCourrant = this.premierSommet;
+            int positionCourrante = 1;
+            while (!(sommet.equals(maillonCourrant.accesSommet()))) {
+                maillonCourrant = maillonCourrant.accesMaillonSuivant();
+                positionCourrante++;
+            }
+            return positionCourrante;
+        }
+        return -1;
     }
 
     public void ajouterSommet(Sommet sommet){
