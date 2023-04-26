@@ -1,8 +1,8 @@
-package Logiciel.Vue;
+package logiciel.vue;
 
-import Logiciel.Controleur.LectureFichier;
-import Logiciel.Modele.Arrete;
-import Logiciel.Modele.Sommet;
+import logiciel.controleur.LectureFichier;
+import logiciel.modele.Arrete;
+import logiciel.modele.Sommet;
 
 import javax.swing.*;
 import java.awt.*;

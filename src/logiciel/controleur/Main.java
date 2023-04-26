@@ -1,11 +1,13 @@
-package Logiciel.Controleur;
+package logiciel.controleur;
 
-import Logiciel.Vue.FenetrePrincipale;
+import logiciel.vue.FenetrePrincipale;
 
 
 public class Main {
 
     public static void main(String[] args) {
+
+        //Crée la fenêtre principale et l'affiche
         FenetrePrincipale fenetrePrincipale = new FenetrePrincipale();
         fenetrePrincipale.pack();
         fenetrePrincipale.setVisible(true);
