@@ -2,17 +2,24 @@ package logiciel.modele;
 
 public class ListeChaineeSommet {
 
-    private class MaillonSommet {
+    public class MaillonSommet {
         private Sommet sommet;
+
+        private int positionDansTabDijktra;
         private MaillonSommet maillonSuivant;
 
         public MaillonSommet(Sommet sommet, MaillonSommet maillonSuivant){
             this.sommet = sommet;
+            positionDansTabDijktra = nombreDeMaillonSommet;
             this.maillonSuivant = maillonSuivant;
         }
 
         public Sommet accesSommet() {
             return sommet;
+        }
+
+        public int accesPositionDansTabDijktra() {
+            return positionDansTabDijktra;
         }
 
         public MaillonSommet accesMaillonSuivant() {
@@ -25,7 +32,7 @@ public class ListeChaineeSommet {
     }
 
     private MaillonSommet premierSommet;
-    private int nombreDeSommet;
+    private int nombreDeMaillonSommet = 0;
 
     public ListeChaineeSommet(){
         this.premierSommet = null;
@@ -36,7 +43,7 @@ public class ListeChaineeSommet {
     }
 
     public int accesNombreDeSommet() {
-        return nombreDeSommet;
+        return nombreDeMaillonSommet;
     }
 
     public void fixePremierSommet(MaillonSommet premierSommet) {
@@ -49,21 +56,20 @@ public class ListeChaineeSommet {
      * @return Le maillon du sommet précèdent au sommet étudié.
      */
     private MaillonSommet rechercheSommetPrecedent(int position){
-        if (position <= this.nombreDeSommet) {
-            //initialisation du sommet précèdent, courant et de son indice
-            MaillonSommet maillonCourant = this.premierSommet;
-            MaillonSommet maillonPrecedent = null;
-            int positionCourante = 1;
+        //initialisation du sommet précèdent, courant et de son indice
+        MaillonSommet maillonCourant = this.premierSommet;
+        MaillonSommet maillonPrecedent = null;
+        int positionCourante = 1;
 
+        if (position <= this.nombreDeMaillonSommet) {
             //Tant qu'on n'est pas au sommet étudié, on avance dans la liste
             while (positionCourante < position) {
                 maillonPrecedent = maillonCourant;
                 maillonCourant = maillonCourant.accesMaillonSuivant();
                 positionCourante++;
             }
-            return maillonPrecedent;
         }
-        return null;
+        return maillonPrecedent;
     }
 
     /**
@@ -90,7 +96,7 @@ public class ListeChaineeSommet {
      * @return Le sommet recherché.
      */
     public Sommet accesSommetParPosition(int position){
-        if (position <= this.nombreDeSommet) {
+        if (position <= this.nombreDeMaillonSommet) {
             //Initialisation du maillon courant et de sa position.
             MaillonSommet maillonCourant = this.premierSommet;
             int positionCourante = 1;
@@ -113,15 +119,19 @@ public class ListeChaineeSommet {
      * @return La position voulu.
      */
     public int accesPositionParSommet(Sommet sommet){
-        if (this.nombreDeSommet > 0) {
+        if (this.nombreDeMaillonSommet > 0) {
             //Initialisation du maillon courrant et de sa position
             MaillonSommet maillonCourant = this.premierSommet;
             int positionCourante = 1;
 
             //Tant qu'on n'est pas au maillon sommet souhaité, on passe au suivant
-            while (!(sommet.equals(maillonCourant.accesSommet()))) {
+            while (!sommet.equals(maillonCourant.accesSommet())) {
                 maillonCourant = maillonCourant.accesMaillonSuivant();
                 positionCourante++;
+
+                if(maillonCourant == null){
+                    return -1;
+                }
             }
 
             //On récupère la position souhaitée
@@ -136,7 +146,8 @@ public class ListeChaineeSommet {
      */
     public void ajouterSommet(Sommet sommet){
         //Création du nouveau maillon sommet
-        MaillonSommet nouveauMaillonSommet = new MaillonSommet(sommet, null);
+        nombreDeMaillonSommet++;
+        MaillonSommet nouveauMaillonSommet = new MaillonSommet(sommet,null);
 
         //Test pour savoir si la liste chainée est vide
         if (this.premierSommet == null){ //Si c'est le cas, on initialise le nouveau maillon comme étant le premier
@@ -164,5 +175,6 @@ public class ListeChaineeSommet {
         }else{ //Sinon, c'est qu'il ne reste plus qu'un sommet (ou 0), donc on réinitialise le premier sommet à null
             this.fixePremierSommet(null);
         }
+        nombreDeMaillonSommet--;
     }
 }

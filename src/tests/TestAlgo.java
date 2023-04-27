@@ -16,11 +16,9 @@ public class TestAlgo {
         //Crée les listes de sommet et d'arrête
         List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
         List<Arrete> listeArrete = LectureFichier.creerListeArrete("Liste_Arrete.csv", listeSommet);
-        Collections.sort(listeSommet);
-        Collections.sort(listeArrete);
 
         //Choix du sommet à traiter
-        Sommet s0 = listeSommet.get(1);
+        Sommet s0 = listeSommet.get(0);
 
 
         double[][] tabDijktra = Algorithmes.dijktra(listeSommet, listeArrete, s0);

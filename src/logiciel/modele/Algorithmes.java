@@ -13,10 +13,11 @@ public class Algorithmes {
      */
     private static ListeChaineeSommet ajoutDesSommets(List<Sommet> listeSommet){
         ListeChaineeSommet listeDesSommetsATraiter = new ListeChaineeSommet();
-        int n = listeSommet.size();
-        for (int i=1; i<n; i++){
-            listeDesSommetsATraiter.ajouterSommet(listeSommet.get(i));
+
+        for (Sommet sommet : listeSommet) {
+            listeDesSommetsATraiter.ajouterSommet(sommet);
         }
+
         return listeDesSommetsATraiter;
     }
 
@@ -28,33 +29,41 @@ public class Algorithmes {
      */
     private static int rechercherDsiMinimale(ListeChaineeSommet listeDesSommetsATraiter, double[][] tabDijktra){
         int iDsiMinimale = INFINI_POSITIF;
-        int n = listeDesSommetsATraiter.accesNombreDeSommet();
-        for (int i = 1; i<n; i++){
-            if(tabDijktra[i][0] < iDsiMinimale){
-                iDsiMinimale = i;
+        int n = tabDijktra.length;
+
+        ListeChaineeSommet.MaillonSommet maillonCourant = listeDesSommetsATraiter.accesPremierSommet();
+        int i=0;
+        while (i <= n){
+            if(maillonCourant != null && maillonCourant.accesPositionDansTabDijktra() == i+1) {
+                if (tabDijktra[i][0] < iDsiMinimale) {
+                    iDsiMinimale = i;
+                }
+                maillonCourant = maillonCourant.accesMaillonSuivant();
             }
+            i++;
         }
         return iDsiMinimale;
     }
 
     /**
-     * Donne la distance entre deux sommets aux indices données, grâce à une liste chainnée de sommet et à une liste d'arrête
-     * @param i l'indice du premier sommet
-     * @param j l'indice du second sommet
-     * @param listeDesSommetsATraiter la liste chainée des sommets à traiter
-     * @param listeArrete la liste des arrêtes
-     * @return la distance recherchée, entre le sommet d'indice i et le sommet d'indice j
+     * Donne la distance entre deux sommets aux indices données, grâce à une liste chainnée de sommet et à une liste d'arrête.
+     * @param i L'indice du premier sommet.
+     * @param j L'indice du second sommet.
+     * @param listeDesSommetsATraiter La liste chainée des sommets à traiter.
+     * @param listeArrete La liste des arrêtes.
+     * @return La distance recherchée, entre le sommet d'indice i et le sommet d'indice j, ou infini si elle n'existe pas.
      */
     private static double distanceEntreDeuxSommets(int i, int j, ListeChaineeSommet listeDesSommetsATraiter, List<Arrete> listeArrete){
-        double distance = -1;
         Sommet si = listeDesSommetsATraiter.accesSommetParPosition(i);
+        assert si!=null;
         Sommet sj = listeDesSommetsATraiter.accesSommetParPosition(j);
+        assert sj!=null;
         for (Arrete a : listeArrete) {
-            if (a.accesSommet1().equals(si) && a.accesSommet2().equals(sj)){
-                distance = a.accesDistance();
+            if ((a.accesSommet1().equals(si) && a.accesSommet2().equals(sj)) || (a.accesSommet1().equals(sj) && a.accesSommet2().equals(si))){
+                return a.accesDistance();
             }
         }
-        return distance;
+        return INFINI_POSITIF;
     }
 
     /**
@@ -82,28 +91,41 @@ public class Algorithmes {
         //Initialisation → On crée le tableau final "tabDijktra", avec pour chaque colonne un sommet attitré. Donc tous les sommets ont une distance infini et n'ont pas de précédant, sauf le sommet traité, à l'indice 0.
         int n = listeSommet.size();
         double[][] tabDijktra = new double[n][2];
+
+        int is0 = listeSommet.indexOf(s0);
         for (int i=1;i<n;i++) {
-            tabDijktra[i][0] = INFINI_POSITIF;
+            if(i == is0){
+                i++;
+            } else {
+                tabDijktra[i][0] = INFINI_POSITIF;
+                tabDijktra[i][1] = -1;
+            }
         }
-        tabDijktra[0][0] = 0;
+        tabDijktra[is0][0] = 0;
+        tabDijktra[is0][1] = 0;
         ListeChaineeSommet listeDesSommetsATraiter = Algorithmes.ajoutDesSommets(listeSommet); //Crée une liste chainée des sommets, qui ne sont pas encore traités, avec la liste des sommets du graphes
         //Fin initialisation
 
-        while(listeDesSommetsATraiter.accesPremierSommet() != null){
+        while(listeDesSommetsATraiter.accesNombreDeSommet() > 1){
             //On récupère l'indice du sommet ayant la plus courte distance au sommet étudié
             int i = Algorithmes.rechercherDsiMinimale(listeDesSommetsATraiter, tabDijktra);
-            listeDesSommetsATraiter.supprimerALaPosition(i); //Du coup, on le supprime des sommets à traiter, vu qu'on va le faire
+            Sommet si = listeDesSommetsATraiter.accesSommetParPosition(i);
 
             for (Arrete arrete: listeArrete) {
-                if (arrete.accesSommet1().equals(s0)){
+                if (arrete.accesSommet1().equals(si)){
                     int j = listeDesSommetsATraiter.accesPositionParSommet(arrete.accesSommet2());
-                    Algorithmes.relacher(i, j, tabDijktra, listeDesSommetsATraiter, listeArrete);
+                    if(j != -1) {
+                        Algorithmes.relacher(i, j, tabDijktra, listeDesSommetsATraiter, listeArrete);
+                    }
                 }
-                if (arrete.accesSommet2().equals(s0)){
+                if (arrete.accesSommet2().equals(si)){
                     int j = listeDesSommetsATraiter.accesPositionParSommet(arrete.accesSommet1());
-                    Algorithmes.relacher(i, j, tabDijktra, listeDesSommetsATraiter, listeArrete);
+                    if(j != -1) {
+                        Algorithmes.relacher(i, j, tabDijktra, listeDesSommetsATraiter, listeArrete);
+                    }
                 }
             }
+            listeDesSommetsATraiter.supprimerALaPosition(i); //Du coup, on le supprime des sommets à traiter, vu qu'on vient de le faire
         }
         return tabDijktra;
     }
