@@ -35,12 +35,6 @@ public class Sommet implements Comparable<Sommet>{
                 '}';
     }
 
-    /**
-     * Recupère un sommet via son nom.
-     * @param listeSommet Une liste de sommet contenant le sommet recherché.
-     * @param nom Le nom du sommet recherché.
-     * @return Le sommet recherché.
-     */
     public static Sommet recupererViaNom(List<Sommet> listeSommet, String nom){
         for (Sommet sommet: listeSommet) {
             if (sommet.accesNom().equals(nom)){
@@ -50,13 +44,8 @@ public class Sommet implements Comparable<Sommet>{
         return null;
     }
 
-    /**
-     * Definit que la comparaison des sommets se fait sur leur nom.
-     * @param s Le sommet qui doit être comparée.
-     * @return Un entier positif si le sommet comparé est plus grand. Un entier négatif si le sommet comparé est plus petit. 0 s'ils sont les mêmes.
-     */
     @Override
-    public int compareTo(Sommet s) {
-        return this.accesNom().compareTo(s.accesNom());
+    public int compareTo(Sommet sommet) {
+        return this.accesNom().compareTo(sommet.accesNom());
     }
 }
