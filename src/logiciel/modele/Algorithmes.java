@@ -128,5 +128,6 @@ public class Algorithmes {
             listeDesSommetsATraiter.supprimerALaPosition(i); //Du coup, on le supprime des sommets à traiter, vu qu'on vient de le faire
         }
         return tabDijktra;
+
     }
 }
