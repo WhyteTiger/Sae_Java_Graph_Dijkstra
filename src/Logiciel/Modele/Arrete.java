@@ -1,4 +1,4 @@
-package Logiciel.Modele;
+package logiciel.modele;
 
 public class Arrete {
     private String nom;

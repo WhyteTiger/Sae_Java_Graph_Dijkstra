@@ -1,6 +1,6 @@
-package Logiciel.Controleur;
+package logiciel.controleur;
 
-import Logiciel.Vue.FenetrePrincipale;
+import logiciel.vue.FenetrePrincipale;
 
 
 public class Main {

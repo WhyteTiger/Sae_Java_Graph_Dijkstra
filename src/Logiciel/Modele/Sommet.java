@@ -1,8 +1,8 @@
-package Logiciel.Modele;
+package logiciel.modele;
 
 import java.util.List;
 
-public class Sommet {
+public class Sommet implements Comparable<Sommet>{
     private String nom;
     private String type;
 
@@ -42,5 +42,10 @@ public class Sommet {
             }
         }
         return null;
+    }
+
+    @Override
+    public int compareTo(Sommet sommet) {
+        return this.accesNom().compareTo(sommet.accesNom());
     }
 }
