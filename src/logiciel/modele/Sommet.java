@@ -50,17 +50,28 @@ public class Sommet implements Comparable<Sommet>{
         return null;
     }
 
+    /**
+     * Compare les sommets via leur nom.
+     * @param sommet the object to be compared.
+     * @return int comparaison
+     */
     @Override
     public int compareTo(Sommet sommet) {
         return this.accesNom().compareTo(sommet.accesNom());
     }
 
+    /**
+     * Non utilisé
+     * @param listeArrete Liste d'arrête.
+     * @param s0 Sommet de base.
+     * @return Une distance.
+     */
     public Double accesDistanceAuSommet(List<Arrete> listeArrete, Sommet s0) {
         for (Arrete arrete : listeArrete) {
             if ((arrete.accesSommet1() == this && arrete.accesSommet2() == s0) || (arrete.accesSommet2() == this && arrete.accesSommet1() == s0)){
                 return arrete.accesDistance();
             }
         }
-        return (double) Algorithmes.INFINI_NEGATIF;
+        return Algorithmes.INFINI_NEGATIF;
     }
 }
