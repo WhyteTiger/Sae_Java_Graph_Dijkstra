@@ -1,6 +1,6 @@
 package logiciel.modele;
 
-public class Arrete implements Comparable<Arrete>{
+public class Arete implements Comparable<Arete>{
     private String nom;
     private double fiabilite;
     private double distance;
@@ -17,7 +17,7 @@ public class Arrete implements Comparable<Arrete>{
      * @param sommet1 Un sommet de l'arrête
      * @param sommet2 L'autre sommet de l'arrête
      */
-    public Arrete(String nom, double fiabilite, double distance, double duree, Sommet sommet1, Sommet sommet2){
+    public Arete(String nom, double fiabilite, double distance, double duree, Sommet sommet1, Sommet sommet2){
         this.nom = nom;
         this.fiabilite = fiabilite;
         this.distance = distance;
@@ -115,7 +115,7 @@ public class Arrete implements Comparable<Arrete>{
      * @return Un entier positif si l'arrête comparée est plus grande. Un entier négatif si l'arrête comparée est plus petite. 0 si elles sont les mêmes.
      */
     @Override
-    public int compareTo(Arrete a) {
+    public int compareTo(Arete a) {
         return this.accesNom().compareTo(a.accesNom());
     }
 }

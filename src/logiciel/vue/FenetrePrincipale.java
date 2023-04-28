@@ -1,7 +1,7 @@
 package logiciel.vue;
 
 import logiciel.controleur.LectureFichier;
-import logiciel.modele.Arrete;
+import logiciel.modele.Arete;
 import logiciel.modele.Sommet;
 
 import javax.swing.*;
@@ -122,7 +122,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
             */
 
             List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
-            List<Arrete> listeArrete = LectureFichier.creerListeArrete("Liste_Arrete.csv", listeSommet);
+            List<Arete> listeArete = LectureFichier.creerListeArete("Liste_Arrete.csv", listeSommet);
 
             if (listeSommet == null){
                 lChargement.setText("Erreur");
@@ -136,8 +136,8 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
             for (Sommet sommet: listeSommet) {
                 this.str = str +"\n"+ sommet.toString();
             }
-            for (Arrete arrete: listeArrete) {
-                this.str = str +"\n"+ arrete.toString();
+            for (Arete arete : listeArete) {
+                this.str = str +"\n"+ arete.toString();
             }
 
             ldescription.setText(str);

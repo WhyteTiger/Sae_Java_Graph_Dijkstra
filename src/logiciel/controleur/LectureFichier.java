@@ -1,6 +1,6 @@
 package logiciel.controleur;
 
-import logiciel.modele.Arrete;
+import logiciel.modele.Arete;
 import logiciel.modele.Sommet;
 
 import java.io.BufferedReader;
@@ -38,15 +38,15 @@ public class LectureFichier {
     }
 
     /**
-     * Crée une liste d'arrête grâce à un fichier .csv et une liste de sommet
+     * Crée une liste d'arête grâce à un fichier .csv et une liste de sommet
      * @param nomFichier nom du fichier .csv
      * @param listeSommet la liste de sommet
-     * @return la liste d'arrête
+     * @return la liste d'arête
      */
-    public static List<Arrete> creerListeArrete(String nomFichier, List<Sommet> listeSommet) {
+    public static List<Arete> creerListeArete(String nomFichier, List<Sommet> listeSommet) {
         String ligne;
         String delimiteur = ",";
-        List<Arrete> listeArrete = new ArrayList<>();
+        List<Arete> listeArete = new ArrayList<>();
 
         try (BufferedReader lecteurF = new BufferedReader(new FileReader(nomFichier))) {
             while ((ligne = lecteurF.readLine()) != null) {
@@ -68,12 +68,12 @@ public class LectureFichier {
                         sommet2 = stmp;
                     }
 
-                    listeArrete.add(new Arrete(nom, fiabilite, distance, duree, sommet1, sommet2));
+                    listeArete.add(new Arete(nom, fiabilite, distance, duree, sommet1, sommet2));
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return listeArrete;
+        return listeArete;
     }
 }
