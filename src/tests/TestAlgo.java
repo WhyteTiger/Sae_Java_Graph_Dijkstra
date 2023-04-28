@@ -6,7 +6,9 @@ import logiciel.modele.Arrete;
 import logiciel.modele.Sommet;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TestAlgo {
     public static void main(String[] args) {
@@ -21,18 +23,12 @@ public class TestAlgo {
         Sommet s0 = listeSommet.get(0);
 
 
-        double[][] tabDijktra = Algorithmes.dijktra(listeSommet, listeArrete, s0);
+        HashMap<Sommet, Sommet> mapPrecedentsDijktra = Algorithmes.dijktra(listeSommet, listeArrete, s0);
 
 
-        //Affiche le tableau retourné
-        int n = tabDijktra.length;
-        for (int i =0; i<n; i++) {
-            System.out.println("Colonne "+ i);
-            for (int j = 0; j < 2; j++) {
-                System.out.print("Ligne "+j+" ");
-                System.out.println(tabDijktra[i][j]);
-            }
-            System.out.println();
+        //Affiche la map retournée
+        for (Map.Entry<Sommet, Sommet> precedentsDijktra : mapPrecedentsDijktra.entrySet()) {
+            System.out.println(precedentsDijktra.getKey() +" "+ precedentsDijktra.getValue());
         }
         //Fin test dijktra
     }

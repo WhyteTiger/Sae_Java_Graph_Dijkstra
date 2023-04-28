@@ -54,4 +54,13 @@ public class Sommet implements Comparable<Sommet>{
     public int compareTo(Sommet sommet) {
         return this.accesNom().compareTo(sommet.accesNom());
     }
+
+    public Double accesDistanceAuSommet(List<Arrete> listeArrete, Sommet s0) {
+        for (Arrete arrete : listeArrete) {
+            if ((arrete.accesSommet1() == this && arrete.accesSommet2() == s0) || (arrete.accesSommet2() == this && arrete.accesSommet1() == s0)){
+                return arrete.accesDistance();
+            }
+        }
+        return (double) Algorithmes.INFINI_NEGATIF;
+    }
 }
