@@ -6,10 +6,13 @@ import java.util.Map;
 
 public class Algorithmes {
 
+    // <editor-fold defaultstate="collapsed" desc="VARIABLES COMMUNES">
     public static double INFINI_POSITIF = Double.MAX_VALUE;
     public static double INFINI_NEGATIF = Double.MIN_VALUE;
+    // </editor-fold>
 
 
+    // <editor-fold defaultstate="collapsed" desc="SOUS-METHODES DIJKTRA">
     private static Sommet rechercherSiADistanceMinimale(HashMap<Sommet, Double> mapDijktra) {
 
         double dSiMinimale = INFINI_POSITIF;
@@ -51,7 +54,10 @@ public class Algorithmes {
             mapPrecedents.replace(sj, si);
         }
     }
+    // </editor-fold>
 
+
+    // <editor-fold defaultstate="collapsed" desc="DIJKTRA">
     /**
      * Algorithme Dijktra, il permet de connaître les plus courtes distances, dans un graphe, entre un sommet donné et les autres, grâce à la liste de sommet et la liste des arêtes du graphe, et d'un sommet de départ à étudier.
      * @param listeSommet La liste des sommets du graphe
@@ -93,4 +99,5 @@ public class Algorithmes {
         }
         return mapPrecedents;
     }
+    // </editor-fold>
 }
