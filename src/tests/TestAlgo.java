@@ -14,7 +14,7 @@ public class TestAlgo {
 
         //Pour test dijktra
 
-        //Crée les listes de sommet et d'arrête
+        //Crée les listes de sommet et d'arête
         List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
         List<Arete> listeArete = LectureFichier.creerListeArete("Liste_Arrete.csv", listeSommet);
 
@@ -22,7 +22,7 @@ public class TestAlgo {
         Sommet s0 = listeSommet.get(0);
 
 
-        HashMap<Sommet, Sommet> mapPrecedentsDijktra = Algorithmes.dijktra(listeSommet, listeArete, s0);
+        Map<Sommet, Sommet> mapPrecedentsDijktra = Algorithmes.dijktra(listeSommet, listeArete, s0);
 
 
         //Affiche la map retournée
