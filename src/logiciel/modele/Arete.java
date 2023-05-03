@@ -1,6 +1,6 @@
 package logiciel.modele;
 
-public class Arete {
+public class Arrete {
     private String nom;
     private double fiabilite;
     private double distance;
@@ -8,7 +8,7 @@ public class Arete {
     private Sommet sommet1;
     private Sommet sommet2;
 
-    public Arete(String nom, double fiabilite, double distance, double duree, Sommet sommet1, Sommet sommet2){
+    public Arrete(String nom, double fiabilite, double distance, double duree, Sommet sommet1, Sommet sommet2){
         this.nom = nom;
         this.fiabilite = fiabilite;
         this.distance = distance;

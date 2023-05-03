@@ -1,7 +1,7 @@
 package logiciel.vue;
 
 import logiciel.controleur.LectureFichier;
-import logiciel.modele.Arete;
+import logiciel.modele.Arrete;
 import logiciel.modele.Sommet;
 
 import javax.swing.*;
@@ -108,8 +108,21 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==chargement) {
+
+            /* exemple pour ouvrir un fichier
+            JFileChooser sl = new JFileChooser();
+            int resultat = sl.showDialog(this, "ouvrir");
+            if (resultat == JFileChooser.APPROVE_OPTION){
+                File f = sl.getSelectedFile();
+                String ch = f.getAbsolutePath();
+
+            }
+
+            Changer ListeSommet.csv par ch
+            */
+
             List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
-            List<Arete> listeArete = LectureFichier.creerListeArrete("Liste_Arrete.csv", listeSommet);
+            List<Arrete> listeArrete = LectureFichier.creerListeArrete("Liste_Arrete.csv", listeSommet);
 
             if (listeSommet == null){
                 lChargement.setText("Erreur");
@@ -123,22 +136,13 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
             for (Sommet sommet: listeSommet) {
                 this.str = str +"\n"+ sommet.toString();
             }
-            for (Arete arete : listeArete) {
-                this.str = str +"\n"+ arete.toString();
+            for (Arrete arrete: listeArrete) {
+                this.str = str +"\n"+ arrete.toString();
             }
 
             ldescription.setText(str);
 
 
-            /* exemple pour ouvrir un fichier
-            JFileChooser sl = new JFileChooser();
-            int resultat = sl.showDialog(this, "ouvrir");
-            if (resultat == JFileChooser.APPROVE_OPTION){
-                File f = sl.getSelectedFile();
-                String ch = f.getAbsolutePath();
-
-            }
-            */
         }
         if(e.getSource()==sauvegarde) {
             System.out.println("Le fichier a bien ete sauvegarder");

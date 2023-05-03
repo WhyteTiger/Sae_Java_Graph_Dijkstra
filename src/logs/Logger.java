@@ -1,4 +1,4 @@
 package logs;
 
-public class Logger {
+public class Logger{
 }
