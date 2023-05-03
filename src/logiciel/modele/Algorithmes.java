@@ -166,17 +166,19 @@ public class Algorithmes {
         }
 
         while(mapDijktra.size() > 1){
-            //On récupère le sommet ayant la plus courte distance au sommet étudié
+            //On récupère le sommet ayant le caractère spécifique au sommet étudié
             Sommet si = Algorithmes.rechercherSiAyantCaracteristiqueSpecifique(mapDijktra, caracteristique);
 
             //Pour chaque arête, on vérifie si le sommet étudié en fait parti, si c'est le cas, on relâche l'arête
             for (Arete arete : listeArete) {
 
+                //Si le sommet si est sommet 1 dans l'arête
                 if (arete.accesSommet1().equals(si) && mapDijktra.containsKey(arete.accesSommet2())){
                     Sommet sj = arete.accesSommet2();
 
                     Algorithmes.relacher(si, sj, mapDijktra, mapPrecedents, listeArete, caracteristique);
                 }
+                //Si le sommet si est sommet 2 dans l'arête
                 if (arete.accesSommet2().equals(si) && mapDijktra.containsKey(arete.accesSommet1())){
                     Sommet sj = arete.accesSommet1();
 
@@ -184,7 +186,7 @@ public class Algorithmes {
                 }
 
             }
-            //Du coup, on le supprime des sommets à traiter, vu qu'on vient de le faire
+            //A la fin, on supprime le sommet si des sommets à traiter, vu qu'on vient de le faire
             mapDijktra.remove(si);
         }
 
