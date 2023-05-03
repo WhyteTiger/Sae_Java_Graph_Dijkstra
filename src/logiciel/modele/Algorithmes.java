@@ -31,23 +31,23 @@ public class Algorithmes {
      * Donne la distance entre deux sommets donnés, grâce à une liste d'arête.
      * @param si Le premier sommet.
      * @param sj Le second sommet.
-     * @param listeArete La liste des arêtes.
+     * @param listeArrete La liste des arêtes.
      * @return La distance recherchée, entre le sommet si et le sommet sj, ou infini si elle n'existe pas.
      */
-    private static double distanceEntreDeuxSommets(Sommet si, Sommet sj, List<Arete> listeArete){
+    private static double distanceEntreDeuxSommets(Sommet si, Sommet sj, List<Arrete> listeArrete){
 
-        for (Arete arete : listeArete) {
-            if ((arete.accesSommet1().equals(si) && arete.accesSommet2().equals(sj)) || (arete.accesSommet1().equals(sj) && arete.accesSommet2().equals(si))){
-                return arete.accesDistance();
+        for (Arrete arrete : listeArrete) {
+            if ((arrete.accesSommet1().equals(si) && arrete.accesSommet2().equals(sj)) || (arrete.accesSommet1().equals(sj) && arrete.accesSommet2().equals(si))){
+                return arrete.accesDistance();
             }
         }
         return INFINI_POSITIF;
     }
 
     //Relâche deux arcs entre le sommet à traiter et les sommets d'indice i et j.
-    public static void relacher(Sommet si, Sommet sj, Map<Sommet, Double> mapDijktra, Map<Sommet, Sommet> mapPrecedents, List<Arete> listeArete){
+    public static void relacher(Sommet si, Sommet sj, Map<Sommet, Double> mapDijktra, Map<Sommet, Sommet> mapPrecedents, List<Arrete> listeArrete){
 
-        double distanceEntreSiEtSj = mapDijktra.get(si)+ Algorithmes.distanceEntreDeuxSommets(si, sj, listeArete);
+        double distanceEntreSiEtSj = mapDijktra.get(si)+ Algorithmes.distanceEntreDeuxSommets(si, sj, listeArrete);
 
         if (mapDijktra.get(sj) > distanceEntreSiEtSj){
             mapDijktra.replace(sj,  distanceEntreSiEtSj);
@@ -61,11 +61,11 @@ public class Algorithmes {
     /**
      * Algorithme Dijktra, il permet de connaître les plus courtes distances, dans un graphe, entre un sommet donné et les autres, grâce à la liste de sommet et la liste des arêtes du graphe, et d'un sommet de départ à étudier.
      * @param listeSommet La liste des sommets du graphe
-     * @param listeArete La liste des arêtes du graphe
+     * @param listeArrete La liste des arêtes du graphe
      * @param s0 le sommet de départ étudié
      * @return Un tableau contenant, dans sa première ligne la distance entre un sommet et son précédant pour avoir le chemin le plus court en partant de s0, et dans sa seconde ligne le sommet précédant.
      */
-    public static Map<Sommet, Sommet> dijktra(List<Sommet> listeSommet, List<Arete> listeArete, Sommet s0){
+    public static Map<Sommet, Sommet> dijktra(List<Sommet> listeSommet, List<Arrete> listeArrete, Sommet s0){
 
         TreeMap<Sommet, Double> mapDijktra = new TreeMap<>();
         TreeMap<Sommet, Sommet> mapPrecedents= new TreeMap<>();
@@ -87,17 +87,17 @@ public class Algorithmes {
             Sommet si = Algorithmes.rechercherSiADistanceMinimale(mapDijktra);
 
             //Pour chaque arête, on vérifie si le sommet étudié en fait parti, si c'est le cas on relâche l'arête
-            for (Arete arete : listeArete) {
+            for (Arrete arrete : listeArrete) {
 
-                if (arete.accesSommet1().equals(si) && mapDijktra.containsKey(arete.accesSommet2())){
-                    Sommet sj = arete.accesSommet2();
+                if (arrete.accesSommet1().equals(si) && mapDijktra.containsKey(arrete.accesSommet2())){
+                    Sommet sj = arrete.accesSommet2();
 
-                    Algorithmes.relacher(si, sj, mapDijktra, mapPrecedents, listeArete);
+                    Algorithmes.relacher(si, sj, mapDijktra, mapPrecedents, listeArrete);
                 }
-                if (arete.accesSommet2().equals(si) && mapDijktra.containsKey(arete.accesSommet1())){
-                    Sommet sj = arete.accesSommet1();
+                if (arrete.accesSommet2().equals(si) && mapDijktra.containsKey(arrete.accesSommet1())){
+                    Sommet sj = arrete.accesSommet1();
 
-                    Algorithmes.relacher(si, sj, mapDijktra, mapPrecedents, listeArete);
+                    Algorithmes.relacher(si, sj, mapDijktra, mapPrecedents, listeArrete);
                 }
 
             }

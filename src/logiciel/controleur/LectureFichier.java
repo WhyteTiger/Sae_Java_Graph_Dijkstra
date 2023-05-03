@@ -1,6 +1,6 @@
 package logiciel.controleur;
 
-import logiciel.modele.Arete;
+import logiciel.modele.Arrete;
 import logiciel.modele.Sommet;
 
 import java.io.BufferedReader;
@@ -43,10 +43,10 @@ public class LectureFichier {
      * @param listeSommet la liste de sommet
      * @return la liste d'arête
      */
-    public static List<Arete> creerListeArete(String nomFichier, List<Sommet> listeSommet) {
+    public static List<Arrete> creerListeArete(String nomFichier, List<Sommet> listeSommet) {
         String ligne;
         String delimiteur = ",";
-        List<Arete> listeArete = new ArrayList<>();
+        List<Arrete> listeArrete = new ArrayList<>();
 
         try (BufferedReader lecteurF = new BufferedReader(new FileReader(nomFichier))) {
             while ((ligne = lecteurF.readLine()) != null) {
@@ -68,12 +68,12 @@ public class LectureFichier {
                         sommet2 = stmp;
                     }
 
-                    listeArete.add(new Arete(nom, fiabilite, distance, duree, sommet1, sommet2));
+                    listeArrete.add(new Arrete(nom, fiabilite, distance, duree, sommet1, sommet2));
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return listeArete;
+        return listeArrete;
     }
 }

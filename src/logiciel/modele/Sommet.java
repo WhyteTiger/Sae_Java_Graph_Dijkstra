@@ -62,14 +62,14 @@ public class Sommet implements Comparable<Sommet>{
 
     /**
      * Non utilisé
-     * @param listeArete Liste d'arête.
+     * @param listeArrete Liste d'arête.
      * @param s0 Sommet de base.
      * @return Une distance.
      */
-    public Double accesDistanceAuSommet(List<Arete> listeArete, Sommet s0) {
-        for (Arete arete : listeArete) {
-            if ((arete.accesSommet1() == this && arete.accesSommet2() == s0) || (arete.accesSommet2() == this && arete.accesSommet1() == s0)){
-                return arete.accesDistance();
+    public Double accesDistanceAuSommet(List<Arrete> listeArrete, Sommet s0) {
+        for (Arrete arrete : listeArrete) {
+            if ((arrete.accesSommet1() == this && arrete.accesSommet2() == s0) || (arrete.accesSommet2() == this && arrete.accesSommet1() == s0)){
+                return arrete.accesDistance();
             }
         }
         return Algorithmes.INFINI_NEGATIF;
