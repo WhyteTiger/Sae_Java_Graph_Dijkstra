@@ -24,7 +24,7 @@ public class Algorithmes {
      * @param caracteristique La caractéristique choisie, entre fiabilité, distance et durée.
      * @return sommet, le sommet voulu.
      */
-    private static Sommet rechercherSiAyantCaracteristiqueSpecifique(Map<Sommet, Double> mapDijktra, int caracteristique) {
+    private static Sommet rechercherSiAyantCaractSpecifique(Map<Sommet, Double> mapDijktra, int caracteristique) {
 
         //On initialise le sommet retourné à null
         Sommet sommet
@@ -167,7 +167,7 @@ public class Algorithmes {
 
         while(mapDijktra.size() > 1){
             //On récupère le sommet ayant le caractère spécifique au sommet étudié
-            Sommet si = Algorithmes.rechercherSiAyantCaracteristiqueSpecifique(mapDijktra, caracteristique);
+            Sommet si = Algorithmes.rechercherSiAyantCaractSpecifique(mapDijktra, caracteristique);
 
             //Pour chaque arête, on vérifie si le sommet étudié en fait parti, si c'est le cas, on relâche l'arête
             for (Arete arete : listeArete) {
@@ -186,7 +186,7 @@ public class Algorithmes {
                 }
 
             }
-            //A la fin, on supprime le sommet si des sommets à traiter, vu qu'on vient de le faire
+            //À la fin, on supprime le sommet si des sommets à traiter, vu qu'on vient de le faire
             mapDijktra.remove(si);
         }
 
