@@ -125,7 +125,7 @@ public class Algorithmes {
      * @param s0 le sommet de départ étudié
      * @return Un tableau contenant, dans sa première ligne la distance entre un sommet et son précédant pour avoir le chemin le plus court en partant de s0, et dans sa seconde ligne le sommet précédant.
      */
-    public static Map<Sommet, Sommet> dijktraPourTout(List<Sommet> listeSommet, List<Arete> listeArete, Sommet s0, int caracteristique){
+    public static Map<Sommet, Sommet> dijktra(List<Sommet> listeSommet, List<Arete> listeArete, Sommet s0, int caracteristique){
 
         TreeMap<Sommet, Double> mapDijktra = new TreeMap<>();
         TreeMap<Sommet, Sommet> mapPrecedents= new TreeMap<>();
