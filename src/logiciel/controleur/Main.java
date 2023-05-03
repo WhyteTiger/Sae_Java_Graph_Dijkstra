@@ -1,8 +1,6 @@
 package logiciel.controleur;
 
-import logiciel.vue.FenetreP;
 import logiciel.vue.FenetrePrincipale;
-
 
 public class Main {
 
@@ -13,6 +11,6 @@ public class Main {
         fenetrePrincipale.pack();
         fenetrePrincipale.setVisible(true);
 
-        FenetreP f1 = new FenetreP();
+        FenetrePrincipale f1 = new FenetrePrincipale();
     }
 }

@@ -21,7 +21,7 @@ public class TestAlgo {
         Sommet s0 = listeSommet.get(1);
 
 
-        Map<Sommet, Sommet> mapPrecedentsDijktra = Algorithmes.dijktra(listeSommet, listeArete, s0);
+        Map<Sommet, Sommet> mapPrecedentsDijktra = Algorithmes.dijktraPourTout(listeSommet, listeArete, s0, Algorithmes.DUREE);
 
 
         //Affiche la map retournée
