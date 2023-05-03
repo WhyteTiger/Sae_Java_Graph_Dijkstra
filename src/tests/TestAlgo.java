@@ -5,7 +5,6 @@ import logiciel.modele.Algorithmes;
 import logiciel.modele.Arete;
 import logiciel.modele.Sommet;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
