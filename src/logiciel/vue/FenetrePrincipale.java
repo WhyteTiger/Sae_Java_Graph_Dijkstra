@@ -1,5 +1,6 @@
 package logiciel.vue;
 
+import exceptions.FichierIncorrectException;
 import logiciel.controleur.LectureFichier;
 import logiciel.modele.Arete;
 import logiciel.modele.Sommet;
@@ -121,14 +122,20 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
             Changer ListeSommet.csv par ch
             */
 
-            List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
-            List<Arete> listeArete = LectureFichier.creerListeArete("Liste_Arrete.csv", listeSommet);
-
-            if (listeSommet == null){
-                lChargement.setText("Erreur");
-            }else{
-                lChargement.setText("OK");
+            List<Sommet> listeSommet;
+            try {
+                listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
+            } catch (FichierIncorrectException ex) {
+                throw new RuntimeException(ex);
             }
+            List<Arete> listeArete;
+            try {
+                listeArete = LectureFichier.creerListeArete("Liste_Arete.csv", listeSommet);
+            } catch (FichierIncorrectException ex) {
+                throw new RuntimeException(ex);
+            }
+
+            lChargement.setText("OK");
 
             //listeSommet.forEach(System.out::println);
             //listeArrete.forEach(System.out::println);

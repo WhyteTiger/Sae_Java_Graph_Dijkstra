@@ -59,8 +59,9 @@ public class Sommet implements Comparable<Sommet>{
 
     /**
      * Compare les sommets via leur nom.
-     * @param sommet the object to be compared.
-     * @return int comparaison
+     *
+     * @param sommet Le sommet comparé.
+     * @return Valeur de la comparaison.
      */
     @Override
     public int compareTo(Sommet sommet) {
@@ -69,6 +70,7 @@ public class Sommet implements Comparable<Sommet>{
 
     /**
      * Récupère un sommet grâce à son nom, dans une liste de sommet.
+     *
      * @param listeSommet La liste de sommet.
      * @param nom Le nom du sommet recherché.
      * @return Le sommet recherché, ou null s'il n'existe pas.

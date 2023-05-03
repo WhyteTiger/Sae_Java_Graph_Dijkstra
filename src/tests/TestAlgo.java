@@ -1,5 +1,6 @@
 package tests;
 
+import exceptions.FichierIncorrectException;
 import logiciel.controleur.LectureFichier;
 import logiciel.modele.Algorithmes;
 import logiciel.modele.Arete;
@@ -9,13 +10,24 @@ import java.util.List;
 import java.util.Map;
 
 public class TestAlgo {
-    public static void main(String[] args) {
+    public static void main(String[] args){
 
         //Pour test dijktra
 
         //Crée les listes de sommet et d'arête
-        List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet_Test.csv");
-        List<Arete> listeArete = LectureFichier.creerListeArete("Liste_Arrete_Test.csv", listeSommet);
+        List<Sommet> listeSommet;
+        try {
+            listeSommet = LectureFichier.creerListeSommet("Liste_Sommet_Test.csv");
+        } catch (FichierIncorrectException e) {
+            throw new RuntimeException(e);
+        }
+
+        List<Arete> listeArete;
+        try {
+            listeArete = LectureFichier.creerListeArete("Liste_Arete_Test.csv", listeSommet);
+        } catch (FichierIncorrectException e) {
+            throw new RuntimeException(e);
+        }
 
         //Choix du sommet à traiter
         Sommet s0 = listeSommet.get(1);
