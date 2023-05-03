@@ -1,14 +1,44 @@
 package logiciel.modele;
 
-public class Arrete {
+public class Arete {
+
+    // <editor-fold defaultstate="collapsed" desc="ATTRIBUTS">
+
+    /**
+     * Nom de l'arête, pour les identifier
+     */
     private String nom;
+
+    /**
+     * La fiabilité de l'arête, soit à quelle point le chemin est sécurisé ou non
+     */
     private double fiabilite;
+
+    /**
+     * La distance de l'arête
+     */
     private double distance;
+
+    /**
+     * La durée de l'arête, soit en combien de temps on la traverse
+     */
     private double duree;
+
+    /**
+     * Un sommet de l'arête
+     */
     private Sommet sommet1;
+
+    /**
+     * L'autre sommet de l'arête
+     */
     private Sommet sommet2;
 
-    public Arrete(String nom, double fiabilite, double distance, double duree, Sommet sommet1, Sommet sommet2){
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="CONSTRUCTEUR">
+
+    public Arete(String nom, double fiabilite, double distance, double duree, Sommet sommet1, Sommet sommet2){
         this.nom = nom;
         this.fiabilite = fiabilite;
         this.distance = distance;
@@ -16,6 +46,10 @@ public class Arrete {
         this.sommet1 = sommet1;
         this.sommet2 = sommet2;
     }
+
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="METHODES PUBLIQUES">
 
     @Override
     public String toString() {
@@ -66,4 +100,6 @@ public class Arrete {
     public void fixeSommet2(Sommet sommet2) {
         this.sommet2 = sommet2;
     }
+
+    // </editor-fold>
 }

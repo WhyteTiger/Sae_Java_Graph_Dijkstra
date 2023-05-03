@@ -3,13 +3,33 @@ package logiciel.modele;
 import java.util.List;
 
 public class Sommet implements Comparable<Sommet>{
+
+    // <editor-fold defaultstate="collapsed" desc="ATTRIBUTS">
+
+    /**
+     * Le nom du sommet, pour les identifier
+     */
     private String nom;
+
+    /**
+     * Le type du sommet, "M" pour maternité, "N" pour nutrition et "O" pour opération
+     */
     private String type;
+
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="ATTRIBUTS">
 
     public Sommet(String nom, String type){
         this.nom = nom;
         this.type = type;
     }
+
+    // </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="METHODES PUBLICS">
+
+    // <editor-fold defaultstate="collapsed" desc="Accesseurs et mutateurs">
 
     public String accesNom() {
         return nom;
@@ -27,27 +47,14 @@ public class Sommet implements Comparable<Sommet>{
         this.type = type;
     }
 
+    // </editor-fold>
+
     @Override
     public String toString() {
         return "Sommet{" +
                 "nom='" + nom + '\'' +
                 ", type='" + type + '\'' +
                 '}';
-    }
-
-    /**
-     * Récupère un sommet grâce à son nom, dans une liste de sommet.
-     * @param listeSommet La liste de sommet.
-     * @param nom Le nom du sommet recherché.
-     * @return Le sommet recherché.
-     */
-    public static Sommet recupererViaNom(List<Sommet> listeSommet, String nom){
-        for (Sommet sommet: listeSommet) {
-            if (sommet.accesNom().equals(nom)){
-                return sommet;
-            }
-        }
-        return null;
     }
 
     /**
@@ -61,17 +68,38 @@ public class Sommet implements Comparable<Sommet>{
     }
 
     /**
+     * Récupère un sommet grâce à son nom, dans une liste de sommet.
+     * @param listeSommet La liste de sommet.
+     * @param nom Le nom du sommet recherché.
+     * @return Le sommet recherché, ou null s'il n'existe pas.
+     */
+    public static Sommet recupererViaNom(List<Sommet> listeSommet, String nom){
+
+        //Parcours tous les sommets de la liste jusqu'à trouver le bon
+        for (Sommet sommet: listeSommet) {
+            //Le bon, c'est celui qui a le même nom
+            if (sommet.accesNom().equals(nom)){
+                return sommet;
+            }
+        }
+        //S'il ne le trouve pas, retourne null
+        return null;
+    }
+
+    /**
      * Non utilisé
-     * @param listeArrete Liste d'arête.
+     * @param listeArete Liste d'arête.
      * @param s0 Sommet de base.
      * @return Une distance.
      */
-    public Double accesDistanceAuSommet(List<Arrete> listeArrete, Sommet s0) {
-        for (Arrete arrete : listeArrete) {
-            if ((arrete.accesSommet1() == this && arrete.accesSommet2() == s0) || (arrete.accesSommet2() == this && arrete.accesSommet1() == s0)){
-                return arrete.accesDistance();
+    public Double accesDistanceAuSommet(List<Arete> listeArete, Sommet s0) {
+        for (Arete arete : listeArete) {
+            if ((arete.accesSommet1() == this && arete.accesSommet2() == s0) || (arete.accesSommet2() == this && arete.accesSommet1() == s0)){
+                return arete.accesDistance();
             }
         }
         return Algorithmes.INFINI_NEGATIF;
     }
+
+    // </editor-fold>
 }

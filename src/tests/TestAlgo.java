@@ -2,7 +2,7 @@ package tests;
 
 import logiciel.controleur.LectureFichier;
 import logiciel.modele.Algorithmes;
-import logiciel.modele.Arrete;
+import logiciel.modele.Arete;
 import logiciel.modele.Sommet;
 
 import java.util.List;
@@ -15,13 +15,13 @@ public class TestAlgo {
 
         //Crée les listes de sommet et d'arête
         List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet_Test.csv");
-        List<Arrete> listeArrete = LectureFichier.creerListeArete("Liste_Arrete_Test.csv", listeSommet);
+        List<Arete> listeArete = LectureFichier.creerListeArete("Liste_Arrete_Test.csv", listeSommet);
 
         //Choix du sommet à traiter
         Sommet s0 = listeSommet.get(1);
 
 
-        Map<Sommet, Sommet> mapPrecedentsDijktra = Algorithmes.dijktra(listeSommet, listeArrete, s0);
+        Map<Sommet, Sommet> mapPrecedentsDijktra = Algorithmes.dijktra(listeSommet, listeArete, s0);
 
 
         //Affiche la map retournée
