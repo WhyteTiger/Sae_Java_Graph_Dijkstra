@@ -19,6 +19,7 @@ public class Algorithmes {
 
     /**
      * Donne le sommet ayant la distance ou la durée la plus basse par rapport au sommet étudié ou la fiabilité la plus haute.
+     *
      * @param mapDijktra l'ensemble des sommets.
      * @param caracteristique La caractéristique choisie, entre fiabilité, distance et durée.
      * @return sommet, le sommet voulu.
@@ -59,19 +60,20 @@ public class Algorithmes {
     }
 
     /**
-     * Donne la distance entre deux sommets donnés, grâce à une liste d'arête.
+     * Donne la caractéristique voulue entre deux sommets donnés, grâce à une liste d'arête.
      *
      * @param si         Le premier sommet.
      * @param sj         Le second sommet.
      * @param listeArete La liste des arêtes.
-     * @param caracteristique
-     * @return La distance recherchée, entre le sommet si et le sommet sj, ou infini si elle n'existe pas.
+     * @param caracteristique La caractéristique voulue
+     * @return La caractéristique recherchée, entre le sommet si et le sommet sj, ou infini si elle n'existe pas.
      */
     private static double CaracteristiqueEntreDeuxSommets(Sommet si, Sommet sj, List<Arete> listeArete, int caracteristique){
 
-        //Pour toutes les arêtes, on regarde si elle a comme sommet 1 et 2 les sommets si sj
+        //Pour toutes les arêtes, on regarde si elle a comme sommet 1 et 2, les sommets si, sj
         for (Arete arete : listeArete) {
             if ((arete.accesSommet1().equals(si) && arete.accesSommet2().equals(sj)) || (arete.accesSommet1().equals(sj) && arete.accesSommet2().equals(si))){
+                //En fonction de la caractéristique voulue, on retourne la bonne valeur
                 switch (caracteristique){
                     case 1 : return arete.accesFiabilite();
                     case 2 : return arete.accesDistance();
@@ -89,9 +91,9 @@ public class Algorithmes {
      * @param si            Le sommet étudié.
      * @param sj            Un autre sommet pas encore étudié.
      * @param mapDijktra    L'ensemble des sommets étudié.
-     * @param mapPrecedents L'ensemble des précédants aux sommets.
+     * @param mapPrecedents L'ensemble des précédents aux sommets.
      * @param listeArete    L'ensemble des arêtes.
-     * @param caracteristique
+     * @param caracteristique La caractéristique par rapport à laquelle on veut relacher les arcs.
      */
     public static void relacher(Sommet si, Sommet sj, Map<Sommet, Double> mapDijktra, Map<Sommet, Sommet> mapPrecedents, List<Arete> listeArete, int caracteristique){
 
