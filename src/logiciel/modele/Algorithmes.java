@@ -48,30 +48,12 @@ public class Algorithmes {
     //Relâche deux arcs entre le sommet à traiter et les sommets d'indice i et j.
     public static void relacher(Sommet si, Sommet sj, Map<Sommet, Double> mapDijktra, Map<Sommet, Sommet> mapPrecedents, List<Arete> listeArete){
 
-        System.out.println("-----------RELACHEMENT----------");
-        System.out.println("value sj :"+mapDijktra.get(sj));
-
-        if(mapDijktra.get(sj) == null){
-            throw new RuntimeException("sj null dans relacher avant distance");
-        }
-
         double distanceEntreSiEtSj = mapDijktra.get(si)+ Algorithmes.distanceEntreDeuxSommets(si, sj, listeArete);
-
-        System.out.println("\ndistance si sj :"+distanceEntreSiEtSj);
-
-        if(mapDijktra.get(sj) == null){
-            throw new RuntimeException("sj null dans relacher");
-        }
 
         if (mapDijktra.get(sj) > distanceEntreSiEtSj){
             mapDijktra.replace(sj,  distanceEntreSiEtSj);
             mapPrecedents.replace(sj, si);
-
-            System.out.println("nouvelle valeur sj : "+mapDijktra.get(sj));
-            System.out.println("nouvelle valeur sj map precedente : "+mapPrecedents.get(sj));
         }
-        System.out.println("value sj fin:"+mapDijktra.get(sj));
-        System.out.println("-----------FIN RELACHEMENT----------");
     }
     // </editor-fold>
 
@@ -101,55 +83,27 @@ public class Algorithmes {
             }
         }
 
-        for (Map.Entry<Sommet, Double> sommetMapDijktra : mapDijktra.entrySet()) {
-            System.out.println("Key: "+sommetMapDijktra.getKey()+"  value: "+sommetMapDijktra.getValue());
-        }
-
-        System.out.println("\n\n");
-
         while(mapDijktra.size() > 1){
             //On récupère l'indice du sommet ayant la plus courte distance au sommet étudié
             Sommet si = Algorithmes.rechercherSiADistanceMinimale(mapDijktra);
 
-            System.out.println("sommet si etudié : "+si.accesNom());
-
             //Pour chaque arête, on vérifie si le sommet étudié en fait parti, si c'est le cas on relâche l'arête
             for (Arete arete : listeArete) {
 
-                System.out.println("arrete etudié : "+arete.accesNom());
-
-                System.out.println("\n"+mapDijktra.containsKey(arete.accesSommet2()));
-                System.out.println("ESTCEQUELEIFPASSE : "+(arete.accesSommet1().equals(si) && mapDijktra.containsKey(arete.accesSommet2())));
                 if (arete.accesSommet1().equals(si) && mapDijktra.containsKey(arete.accesSommet2())){
                     Sommet sj = arete.accesSommet2();
 
-                    System.out.println("sommet sj : "+sj.accesNom()+" value: "+mapDijktra.get(sj));
-
                     Algorithmes.relacher(si, sj, mapDijktra, mapPrecedents, listeArete);
-
-                    System.out.println("\narete relache\n");
                 }
-
-                /*
-                if (arete.accesSommet2().equals(si)){
+                if (arete.accesSommet2().equals(si) && mapDijktra.containsKey(arete.accesSommet1())){
                     Sommet sj = arete.accesSommet1();
 
-                    System.out.println("sommet sj : "+sj.accesNom());
-
                     Algorithmes.relacher(si, sj, mapDijktra, mapPrecedents, listeArete);
-
-                    System.out.println("\narete relache\n");
                 }
-                 */
+
             }
 
             mapDijktra.remove(si); //Du coup, on le supprime des sommets à traiter, vu qu'on vient de le faire
-
-            System.out.println("remove "+mapDijktra.containsKey(si));
-
-            for (Map.Entry<Sommet, Double> sommetMapDijktra : mapDijktra.entrySet()) {
-                System.out.println("Key: "+sommetMapDijktra.getKey()+"  value: "+sommetMapDijktra.getValue());
-            }
         }
 
         return mapPrecedents;
