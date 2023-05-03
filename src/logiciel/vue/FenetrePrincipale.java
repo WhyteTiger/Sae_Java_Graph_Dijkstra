@@ -122,7 +122,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
             */
 
             List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
-            List<Arrete> listeArrete = LectureFichier.creerListeArete("Liste_Arrete.csv", listeSommet);
+            List<Arrete> listeArrete = LectureFichier.creerListeArrete("Liste_Arrete.csv", listeSommet);
 
             if (listeSommet == null){
                 lChargement.setText("Erreur");
@@ -136,7 +136,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
             for (Sommet sommet: listeSommet) {
                 this.str = str +"\n"+ sommet.toString();
             }
-            for (Arrete arrete : listeArrete) {
+            for (Arrete arrete: listeArrete) {
                 this.str = str +"\n"+ arrete.toString();
             }
 

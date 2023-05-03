@@ -11,11 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class LectureFichier {
-    /**
-     * Crée une liste de sommet grâce à un fichier .csv
-     * @param nomFichier nom du fichier .csv
-     * @return la liste de sommet
-     */
     public static List<Sommet> creerListeSommet(String nomFichier) {
         String ligne;
         String delimiteur = ",";
@@ -37,13 +32,7 @@ public class LectureFichier {
         return listeSommet;
     }
 
-    /**
-     * Crée une liste d'arête grâce à un fichier .csv et une liste de sommet
-     * @param nomFichier nom du fichier .csv
-     * @param listeSommet la liste de sommet
-     * @return la liste d'arête
-     */
-    public static List<Arrete> creerListeArete(String nomFichier, List<Sommet> listeSommet) {
+    public static List<Arrete> creerListeArrete(String nomFichier, List<Sommet> listeSommet) {
         String ligne;
         String delimiteur = ",";
         List<Arrete> listeArrete = new ArrayList<>();
