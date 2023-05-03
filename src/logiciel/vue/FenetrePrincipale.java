@@ -122,10 +122,15 @@ public class FenetrePrincipale extends JFrame implements ActionListener {
             Changer ListeSommet.csv par ch
             */
 
-            List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
-            List<Arete> listeArete = null;
+            List<Sommet> listeSommet;
             try {
-                listeArete = LectureFichier.creerListeArete("Liste_Arrete.csv", listeSommet);
+                listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
+            } catch (FichierIncorrectException ex) {
+                throw new RuntimeException(ex);
+            }
+            List<Arete> listeArete;
+            try {
+                listeArete = LectureFichier.creerListeArete("Liste_Arete.csv", listeSommet);
             } catch (FichierIncorrectException ex) {
                 throw new RuntimeException(ex);
             }

@@ -15,11 +15,16 @@ public class TestAlgo {
         //Pour test dijktra
 
         //Crée les listes de sommet et d'arête
-        List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet_Test.csv");
+        List<Sommet> listeSommet;
+        try {
+            listeSommet = LectureFichier.creerListeSommet("Liste_Sommet_Test.csv");
+        } catch (FichierIncorrectException e) {
+            throw new RuntimeException(e);
+        }
 
         List<Arete> listeArete;
         try {
-            listeArete = LectureFichier.creerListeArete("Liste_Arrete_Test.csv", listeSommet);
+            listeArete = LectureFichier.creerListeArete("Liste_Arete_Test.csv", listeSommet);
         } catch (FichierIncorrectException e) {
             throw new RuntimeException(e);
         }
