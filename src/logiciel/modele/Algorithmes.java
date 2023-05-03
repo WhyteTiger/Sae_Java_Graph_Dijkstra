@@ -18,37 +18,44 @@ public class Algorithmes {
     // <editor-fold defaultstate="collapsed" desc="SOUS-METHODES DIJKTRA">
 
     /**
-     * Donne le sommet ayant la distance la plus courte au sommet étudié
-     *
-     * @param mapDijktra l'ensemble des sommets
-     * @param caracteristique
-     * @return sDMin, le sommet avec la distance la plus courte au sommet étudié
+     * Donne le sommet ayant la distance ou la durée la plus basse par rapport au sommet étudié ou la fiabilité la plus haute.
+     * @param mapDijktra l'ensemble des sommets.
+     * @param caracteristique La caractéristique choisie, entre fiabilité, distance et durée.
+     * @return sommet, le sommet voulu.
      */
-    private static Sommet rechercherSiAyantCaracteristiqueMinimale(Map<Sommet, Double> mapDijktra, int caracteristique) {
+    private static Sommet rechercherSiAyantCaracteristiqueSpecifique(Map<Sommet, Double> mapDijktra, int caracteristique) {
 
-        Sommet sDMin = null;
+        //On initialise le sommet retourné à null
+        Sommet sommet
+                = null;
 
+        //Si la caractéristique recherchée est la fiabilité
         if(caracteristique == Algorithmes.FIABILITE){
-            double dSiMinimale = 0;
+            //On met la fiabilité minimale à 0
+            double fiabiliteSiMaximale = 0;
 
+            //Pour tous les sommets de la map, si la fiabilité du sommet est plus grande que la fiabilitéMaximale on la garde
             for (Map.Entry<Sommet, Double> sommetMapDijktra : mapDijktra.entrySet()) {
-                if (sommetMapDijktra.getValue() > dSiMinimale) {
-                    dSiMinimale = sommetMapDijktra.getValue();
-                    sDMin = sommetMapDijktra.getKey();
+                if (sommetMapDijktra.getValue() > fiabiliteSiMaximale) {
+                    fiabiliteSiMaximale = sommetMapDijktra.getValue();
+
+                    sommet = sommetMapDijktra.getKey();
                 }
             }
         } else {
-            double dSiMinimale = INFINI_POSITIF;
+            //Sinon, on met la caractSiMinimale à +infini
+            double caractSiMinimale = INFINI_POSITIF;
 
-            //Pour chaque sommet de la map, on compare sa distance avec la distance minimale sDMin, si elle est plus petite on réactualise sDMin
+            //Pour chaque sommet de la map, on compare sa caractéristique (distance/durée) avec celle minimale "sommet", si elle est plus petite on réactualise sommet
             for (Map.Entry<Sommet, Double> sommetMapDijktra : mapDijktra.entrySet()) {
-                if (sommetMapDijktra.getValue() < dSiMinimale) {
-                    dSiMinimale = sommetMapDijktra.getValue();
-                    sDMin = sommetMapDijktra.getKey();
+                if (sommetMapDijktra.getValue() < caractSiMinimale) {
+                    caractSiMinimale = sommetMapDijktra.getValue();
+
+                    sommet = sommetMapDijktra.getKey();
                 }
             }
         }
-        return sDMin;
+        return sommet;
     }
 
     /**
@@ -158,7 +165,7 @@ public class Algorithmes {
 
         while(mapDijktra.size() > 1){
             //On récupère le sommet ayant la plus courte distance au sommet étudié
-            Sommet si = Algorithmes.rechercherSiAyantCaracteristiqueMinimale(mapDijktra, caracteristique);
+            Sommet si = Algorithmes.rechercherSiAyantCaracteristiqueSpecifique(mapDijktra, caracteristique);
 
             //Pour chaque arête, on vérifie si le sommet étudié en fait parti, si c'est le cas, on relâche l'arête
             for (Arete arete : listeArete) {
@@ -177,10 +184,6 @@ public class Algorithmes {
             }
             //Du coup, on le supprime des sommets à traiter, vu qu'on vient de le faire
             mapDijktra.remove(si);
-
-            for (Map.Entry<Sommet, Double> precedentsDijktra : mapDijktra.entrySet()) {
-                System.out.println("Sommet : "+precedentsDijktra.getKey().accesNom() +"   Précédant : "+ precedentsDijktra.getValue());
-            }
         }
 
         return mapPrecedents;
