@@ -1,5 +1,6 @@
 package logiciel.controleur;
 
+import exceptions.FichierIncorrectException;
 import logiciel.modele.Arete;
 import logiciel.modele.Sommet;
 
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class LectureFichier {
     public static List<Sommet> creerListeSommet(String nomFichier) {
@@ -21,14 +23,25 @@ public class LectureFichier {
                 String[] donees = ligne.split(delimiteur);
                 String nom = donees[0];
                 String type = donees[1];
-                if(nom.startsWith("S")) {
+                if(!nom.equals("Nom du sommet")) {
+                    for (Sommet sommet: listeSommet) {
+                        if(sommet.accesNom().equals(nom)){
+                            throw new FichierIncorrectException("Erreur : Deux nom de sommets pareils");
+                        }
+                    }
+                    if(!type.equals("M") && !type.equals("N") && !type.equals("O")){
+                        throw new FichierIncorrectException("Erreur : Type incorrect");
+                    }
                     listeSommet.add(new Sommet(nom, type));
                 }
             }
             Collections.sort(listeSommet);
+        } catch (FichierIncorrectException e){
+            e.getMessage();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return listeSommet;
     }
 
@@ -51,7 +64,7 @@ public class LectureFichier {
                     //Pour ranger les sommets par ordre croissant entre sommet1 et sommet2
                     assert sommet1 != null;
                     assert sommet2 != null;
-                    if(sommet1.accesNom().compareTo(sommet2.accesNom()) > 0){
+                    if(sommet1.compareTo(sommet2) > 0){
                         Sommet stmp = sommet1;
                         sommet1 = sommet2;
                         sommet2 = stmp;

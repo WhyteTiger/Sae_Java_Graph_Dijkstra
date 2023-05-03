@@ -15,6 +15,7 @@ public class TestAlgo {
 
         //Crée les listes de sommet et d'arête
         List<Sommet> listeSommet = LectureFichier.creerListeSommet("Liste_Sommet_Test.csv");
+
         List<Arete> listeArete = LectureFichier.creerListeArete("Liste_Arrete_Test.csv", listeSommet);
 
         //Choix du sommet à traiter
