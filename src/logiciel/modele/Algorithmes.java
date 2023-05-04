@@ -1,8 +1,6 @@
 package logiciel.modele;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Algorithmes {
 
@@ -15,7 +13,9 @@ public class Algorithmes {
     // </editor-fold>
 
 
-    // <editor-fold defaultstate="collapsed" desc="SOUS-METHODES DIJKTRA">
+    // <editor-fold defaultstate="collapsed" desc="METHODES PUBLIQUES">
+
+    // <editor-fold defaultstate="collapsed" desc="Sous-méthodes Dijktra">
 
     /**
      * Donne le sommet ayant la distance ou la durée la plus basse par rapport au sommet étudié ou la fiabilité la plus haute.
@@ -91,13 +91,14 @@ public class Algorithmes {
      * @param si            Le sommet étudié.
      * @param sj            Un autre sommet pas encore étudié.
      * @param mapDijktra    L'ensemble des sommets étudié.
-     * @param mapPrecedents L'ensemble des précédents aux sommets.
+     * @param mapPrecedents L'ensemble des précédents aux sommets avec leur caractéristique retenue.
      * @param listeArete    L'ensemble des arêtes.
      * @param caracteristique La caractéristique par rapport à laquelle on veut relacher les arcs.
      */
-    public static void relacher(Sommet si, Sommet sj, Map<Sommet, Double> mapDijktra, Map<Sommet, Sommet> mapPrecedents, List<Arete> listeArete, int caracteristique){
+    public static void relacher(Sommet si, Sommet sj, Map<Sommet, Double> mapDijktra, Map<Sommet, Precedent_Valeur> mapPrecedents, List<Arete> listeArete, int caracteristique){
 
         double caracteristiqueEntreSiEtSj;
+        double valeurRetenue = mapDijktra.get(sj);
 
         if(caracteristique == Algorithmes.FIABILITE){
             //On récupère la fiabilité de l'arc entre si et sj
@@ -106,6 +107,8 @@ public class Algorithmes {
             //Si cette fiabilité est plus grande que celle déjà assigné à sj on la remplace
             if (caracteristiqueEntreSiEtSj > mapDijktra.get(sj)) {
                 mapDijktra.replace(sj, caracteristiqueEntreSiEtSj);
+                //On sauvegarde la nouvelle valeur retenue pour la caractéristique entre si et sj
+                valeurRetenue = caracteristiqueEntreSiEtSj;
             }
         } else {
             //On récupère la caractéristique de l'arc entre si et sj
@@ -114,30 +117,34 @@ public class Algorithmes {
             //Si cette caractéristique est plus petite que celle déjà assigné à sj on la remplace
             if (caracteristiqueEntreSiEtSj < mapDijktra.get(sj)) {
                 mapDijktra.replace(sj, caracteristiqueEntreSiEtSj);
+                //On sauvegarde la nouvelle valeur retenue pour la caractéristique entre si et sj
+                valeurRetenue = caracteristiqueEntreSiEtSj;
             }
         }
 
 
         //Puis, on actualise le précédant de sj
-        mapPrecedents.replace(sj, si);
+        mapPrecedents.replace(sj, new Precedent_Valeur(si, valeurRetenue));
     }
 
     // </editor-fold>
 
 
-    // <editor-fold defaultstate="collapsed" desc="DIJKTRA">
+    // <editor-fold defaultstate="collapsed" desc="Dijktra">
 
     /**
      * Algorithme Dijktra, il permet de connaître les plus courtes distances, dans un graphe, entre un sommet donné et les autres, grâce à la liste de sommet et la liste des arêtes du graphe, et d'un sommet de départ à étudier.
+     *
      * @param listeSommet La liste des sommets du graphe
      * @param listeArete La liste des arêtes du graphe
      * @param s0 le sommet de départ étudié
-     * @return Un tableau contenant, dans sa première ligne la distance entre un sommet et son précédant pour avoir le chemin le plus court en partant de s0, et dans sa seconde ligne le sommet précédant.
+     * @param caracteristique la caractéristique pour comparer les sommets (fiabilité, distance, durée)
+     * @return Une map contenant comme pour chaque sommet, son antécédent avec sa caractéristique retenue.
      */
-    public static Map<Sommet, Sommet> dijktra(List<Sommet> listeSommet, List<Arete> listeArete, Sommet s0, int caracteristique){
+    public static Map<Sommet, Precedent_Valeur> dijktra(List<Sommet> listeSommet, List<Arete> listeArete, Sommet s0, int caracteristique){
 
-        TreeMap<Sommet, Double> mapDijktra = new TreeMap<>();
-        TreeMap<Sommet, Sommet> mapPrecedents= new TreeMap<>();
+        HashMap<Sommet, Double> mapDijktra              = new HashMap<>();
+        HashMap<Sommet, Precedent_Valeur> mapPrecedents = new HashMap<>();
 
         //Initialisation des map Dijktra et Précédents
         for (Sommet sommet : listeSommet) {
@@ -149,7 +156,8 @@ public class Algorithmes {
                 //Sauf pour le sommet étudié, on met la fiabilité à 1 et lui-même comme précédant
                 if (sommet.equals(s0)) {
                     mapDijktra.replace(sommet, 1.0);
-                    mapPrecedents.replace(sommet, sommet);
+                    Precedent_Valeur pv = new Precedent_Valeur(sommet, 0.0);
+                    mapPrecedents.replace(sommet, pv);
                 }
 
             } else {
@@ -160,12 +168,13 @@ public class Algorithmes {
                 //Sauf pour le sommet étudié, on met la caractéristique à 0 et lui-même comme précédant
                 if (sommet.equals(s0)) {
                     mapDijktra.replace(sommet, 0.0);
-                    mapPrecedents.replace(sommet, sommet);
+                    Precedent_Valeur pv = new Precedent_Valeur(sommet, 0.0);
+                    mapPrecedents.replace(sommet, pv);
                 }
             }
         }
 
-        while(mapDijktra.size() > 1){
+        while(mapDijktra.size() > 1) {
             //On récupère le sommet ayant le caractère spécifique au sommet étudié
             Sommet si = Algorithmes.rechercherSiAyantCaractSpecifique(mapDijktra, caracteristique);
 
@@ -173,13 +182,13 @@ public class Algorithmes {
             for (Arete arete : listeArete) {
 
                 //Si le sommet si est sommet 1 dans l'arête
-                if (arete.accesSommet1().equals(si) && mapDijktra.containsKey(arete.accesSommet2())){
+                if (arete.accesSommet1().equals(si) && mapDijktra.containsKey(arete.accesSommet2())) {
                     Sommet sj = arete.accesSommet2();
 
                     Algorithmes.relacher(si, sj, mapDijktra, mapPrecedents, listeArete, caracteristique);
                 }
                 //Si le sommet si est sommet 2 dans l'arête
-                if (arete.accesSommet2().equals(si) && mapDijktra.containsKey(arete.accesSommet1())){
+                if (arete.accesSommet2().equals(si) && mapDijktra.containsKey(arete.accesSommet1())) {
                     Sommet sj = arete.accesSommet1();
 
                     Algorithmes.relacher(si, sj, mapDijktra, mapPrecedents, listeArete, caracteristique);
@@ -191,6 +200,34 @@ public class Algorithmes {
         }
 
         return mapPrecedents;
+    }
+
+    // </editor-fold>
+
+
+    public static List<Sommet> resultatDijktraListePrecedents(Sommet sommetDepart, Sommet sommetDArriver, Map<Sommet, Precedent_Valeur> mapPrecedents){
+
+        List<Sommet> listePrecedents = new ArrayList<>();
+        Sommet sommetCourant = sommetDArriver;
+
+        do {
+            for (Map.Entry<Sommet, Precedent_Valeur> precedent_val : mapPrecedents.entrySet()) {
+
+                if (precedent_val.getKey().equals(sommetCourant)) {
+
+                    listePrecedents.add(precedent_val.getValue().accesPrecedent());
+                    sommetCourant = precedent_val.getValue().accesPrecedent();
+                }
+
+            }
+        }
+        while (!Objects.equals(sommetCourant, sommetDepart));
+
+        return listePrecedents;
+    }
+
+    public static double resultatDijktraValeur(Sommet sommetDArriver, Map<Sommet, Precedent_Valeur> mapPrecedents){
+        return mapPrecedents.get(sommetDArriver).accesValeur();
     }
 
     // </editor-fold>
