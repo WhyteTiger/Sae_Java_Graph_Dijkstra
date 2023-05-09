@@ -4,6 +4,7 @@ import exceptions.FichierIncorrectException;
 import logiciel.controleur.LectureFichier;
 import logiciel.modele.Algorithmes;
 import logiciel.modele.Arete;
+import logiciel.modele.Precedent_Valeur;
 import logiciel.modele.Sommet;
 
 import java.util.List;
@@ -33,13 +34,23 @@ public class TestAlgo {
         Sommet s0 = listeSommet.get(1);
 
 
-        Map<Sommet, Sommet> mapPrecedentsDijktra = Algorithmes.dijktra(listeSommet, listeArete, s0, Algorithmes.DUREE);
+        Map<Sommet, Precedent_Valeur> mapPrecedentsDijktra = Algorithmes.dijktra(listeSommet, listeArete, s0, Algorithmes.DISTANCE);
 
 
         //Affiche la map retournée
-        for (Map.Entry<Sommet, Sommet> precedentsDijktra : mapPrecedentsDijktra.entrySet()) {
-            System.out.println("Sommet : "+precedentsDijktra.getKey().accesNom() +"   Précédant : "+ precedentsDijktra.getValue().accesNom());
+        for (Map.Entry<Sommet, Precedent_Valeur> precedentsDijktra : mapPrecedentsDijktra.entrySet()) {
+            System.out.println("Sommet : "+precedentsDijktra.getKey().accesNom() +"   Précédant : "+ precedentsDijktra.getValue().accesPrecedent().accesNom());
         }
+
+        System.out.println("Ce chemin à un poids de "+Algorithmes.resultatDijktraValeur(listeSommet.get(0), Algorithmes.dijktra(listeSommet, listeArete, listeSommet.get(4), Algorithmes.DISTANCE)));
+
+        List<Sommet> listePrecedents = Algorithmes.resultatDijktraListePrecedents(listeSommet.get(0), Algorithmes.dijktra(listeSommet, listeArete, listeSommet.get(1), Algorithmes.DISTANCE));
+
+        for (Sommet sommet:listePrecedents) {
+            System.out.println(sommet.accesNom());
+        }
+
+
         //Fin test dijktra
     }
 }
