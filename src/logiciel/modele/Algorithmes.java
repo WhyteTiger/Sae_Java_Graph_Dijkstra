@@ -129,7 +129,6 @@ public class Algorithmes {
 
     // </editor-fold>
 
-
     // <editor-fold defaultstate="collapsed" desc="Dijktra">
 
     /**
@@ -204,31 +203,66 @@ public class Algorithmes {
 
     // </editor-fold>
 
+    // <editor-fold defaultstate="collapsed" desc="Résultats Dijktra">
 
-    public static List<Sommet> resultatDijktraListePrecedents(Sommet sommetDepart, Sommet sommetDArriver, Map<Sommet, Precedent_Valeur> mapPrecedents){
+    /**
+     * Donne le chemin entre le sommet initial, qu'on a utilisé pour avoir la map (résultante de la méthode Dijktra), et le chemin d'arrivée qu'on donne.
+     *
+     * @param sommetDArriver Le sommet d'arrivée.
+     * @param mapPrecedents La map obtenue après avoir utilisé la méthode avec le sommet initiale et la caractéristique voulue.
+     * @return Le chemin voulu, sous forme de liste de sommet.
+     */
+    public static List<Sommet> resultatDijktraListePrecedents(Sommet sommetDArriver, Map<Sommet, Precedent_Valeur> mapPrecedents){
 
+        //Initialisation
         List<Sommet> listePrecedents = new ArrayList<>();
         Sommet sommetCourant = sommetDArriver;
 
-        do {
-            for (Map.Entry<Sommet, Precedent_Valeur> precedent_val : mapPrecedents.entrySet()) {
+        Sommet sommetDepart = null;
+        //Le sommet de départ est celui qui a lui-même comme précédent, donc on le cherche dans la mapPrecedent
+        for (Map.Entry<Sommet, Precedent_Valeur> precedent_val : mapPrecedents.entrySet()) {
 
-                if (precedent_val.getKey().equals(sommetCourant)) {
+            if (precedent_val.getKey().equals(precedent_val.getValue().accesPrecedent())) {
 
-                    listePrecedents.add(precedent_val.getValue().accesPrecedent());
-                    sommetCourant = precedent_val.getValue().accesPrecedent();
-                }
-
+                sommetDepart = precedent_val.getKey();
             }
         }
-        while (!Objects.equals(sommetCourant, sommetDepart));
+        //Fin initialisation
+
+        /*
+        Pour retracer le chemin entre le sommet de départ et le sommet d'arrivée
+        On part du sommet d'arrivée jusqu'au sommet de départ
+        Pour cela, on regarde le sommet précédent au sommet "courant" (qui est égale au sommet d'arrivée à la 1ère itération)
+        S'il n'est pas égal au sommet de départ, on prend son antécédent comme sommet courant et on recommence.
+        */
+        while (!Objects.equals(sommetCourant, sommetDepart)){
+            for (Map.Entry<Sommet, Precedent_Valeur> precedent_val : mapPrecedents.entrySet()) {
+
+                //On cherche le sommet courant dans la map des précédents
+                if (precedent_val.getKey().equals(sommetCourant)) {
+                    //On ajoute son précédent à la liste des précédents
+                    listePrecedents.add(precedent_val.getValue().accesPrecedent());
+                    //Du coup, son précédent devient le sommet courant
+                    sommetCourant = precedent_val.getValue().accesPrecedent();
+                }
+            }
+        }
 
         return listePrecedents;
     }
 
+    /**
+     * Donne le poids du chemin entre le sommet initiale, qu'on a utilisé pour avoir la map (résultante de la méthode Dijktra), et le chemin d'arrivée qu'on donne.
+     *
+     * @param sommetDArriver Le sommet d'arrivée.
+     * @param mapPrecedents La map obtenue après avoir utilisé la méthode avec le sommet initiale et la caractéristique voulue.
+     * @return Le poids du chemin.
+     */
     public static double resultatDijktraValeur(Sommet sommetDArriver, Map<Sommet, Precedent_Valeur> mapPrecedents){
         return mapPrecedents.get(sommetDArriver).accesValeur();
     }
+
+    // </editor-fold>
 
     // </editor-fold>
 }

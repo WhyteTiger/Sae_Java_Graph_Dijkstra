@@ -44,7 +44,7 @@ public class TestAlgo {
 
         System.out.println("Ce chemin à un poids de "+Algorithmes.resultatDijktraValeur(listeSommet.get(0), Algorithmes.dijktra(listeSommet, listeArete, listeSommet.get(4), Algorithmes.DISTANCE)));
 
-        List<Sommet> listePrecedents = Algorithmes.resultatDijktraListePrecedents(listeSommet.get(1), listeSommet.get(0), Algorithmes.dijktra(listeSommet, listeArete, listeSommet.get(1), Algorithmes.DISTANCE));
+        List<Sommet> listePrecedents = Algorithmes.resultatDijktraListePrecedents(listeSommet.get(0), Algorithmes.dijktra(listeSommet, listeArete, listeSommet.get(1), Algorithmes.DISTANCE));
 
         for (Sommet sommet:listePrecedents) {
             System.out.println(sommet.accesNom());

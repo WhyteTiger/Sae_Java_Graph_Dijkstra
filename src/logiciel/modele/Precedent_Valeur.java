@@ -1,5 +1,8 @@
 package logiciel.modele;
 
+/**
+ * Permet de stocker l'antécédent et sa valeur dans la map retournée par la méthode Dijktra
+ */
 public class Precedent_Valeur {
     private final Sommet precedent;
     private final double valeur;
