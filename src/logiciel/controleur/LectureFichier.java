@@ -3,7 +3,6 @@ package logiciel.controleur;
 import exceptions.FichierIncorrectException;
 import logiciel.modele.Arete;
 import logiciel.modele.Sommet;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -22,7 +21,7 @@ public class LectureFichier {
      * @return La liste des sommets.
      * @throws FichierIncorrectException Lorsque le fichier est incorrect.
      */
-    public static @NotNull List<Sommet> creerListeSommet(String nomFichier) throws FichierIncorrectException {
+    public static List<Sommet> creerListeSommet(String nomFichier) throws FichierIncorrectException {
 
         //Initialisation des variables utiles et de la liste
         String ligne;
@@ -75,7 +74,7 @@ public class LectureFichier {
      * @return La liste des arêtes.
      * @throws FichierIncorrectException Lorsque le fichier est incorrect.
      */
-    public static @NotNull List<Arete> creerListeArete(String nomFichier, List<Sommet> listeSommet) throws FichierIncorrectException {
+    public static List<Arete> creerListeArete(String nomFichier, List<Sommet> listeSommet) throws FichierIncorrectException {
 
         //Initialisation des variables utiles et de la liste
         String ligne;

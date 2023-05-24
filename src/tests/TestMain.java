@@ -17,7 +17,6 @@ public class TestMain {
             this.setSize(300, 250);
             this.setTitle("Test dessins");
             this.getContentPane().setBackground(Color.ORANGE);
-            this.getContentPane().add(new Graphe(listeSommet, listeArete, 300, 250));
         }
 
     }
