@@ -5,15 +5,13 @@ import logiciel.modele.Sommet;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import static java.awt.RenderingHints.KEY_ANTIALIASING;
-import static java.awt.RenderingHints.VALUE_ANTIALIAS_ON;
+import static java.awt.RenderingHints.*;
 
 public class Graphe extends JPanel {
     private final List<VisuelSommet> listeVisuelSommet;
@@ -87,27 +85,28 @@ public class Graphe extends JPanel {
                         System.out.println("3 e X :"+e.getX()+"   e Y :"+e.getY());
                         sommet.fixeCoordX(e.getX());
                         sommet.fixeCoordY(e.getY());
+
+                        listeVisuelArete.clear();
+                        for (Arete arete : listeArete){
+
+                            int coordonneeX1 = 0, coordonneeY1 = 0, coordonneeX2 = 0, coordonneeY2 = 0;
+
+                            for (VisuelSommet nouveauSommet : listeVisuelSommet) {
+                                if (nouveauSommet.accesNomVisuel().equals(arete.accesSommet1().accesNom())){
+                                    coordonneeX1 = nouveauSommet.accesCoordX();
+                                    coordonneeY1 = nouveauSommet.accesCoordY();
+                                }
+                                if (nouveauSommet.accesNomVisuel().equals(arete.accesSommet2().accesNom())){
+                                    coordonneeX2 = nouveauSommet.accesCoordX();
+                                    coordonneeY2 = nouveauSommet.accesCoordY();
+                                }
+                            }
+
+                            listeVisuelArete.add(new VisuelArete(arete.accesNom(), coordonneeX1, coordonneeY1, coordonneeX2, coordonneeY2, Color.BLACK));
+                        }
+
                         repaint();
                     }
-                }
-
-                listeArete.clear();
-                for (Arete arete : listeArete){
-
-                    int coordonneeX1 = 0, coordonneeY1 = 0, coordonneeX2 = 0, coordonneeY2 = 0;
-
-                    for (VisuelSommet nouveauSommet : listeVisuelSommet) {
-                        if (nouveauSommet.accesNomVisuel().equals(arete.accesSommet1().accesNom())){
-                            coordonneeX1 = nouveauSommet.accesCoordX();
-                            coordonneeY1 = nouveauSommet.accesCoordY();
-                        }
-                        if (nouveauSommet.accesNomVisuel().equals(arete.accesSommet2().accesNom())){
-                            coordonneeX2 = nouveauSommet.accesCoordX();
-                            coordonneeY2 = nouveauSommet.accesCoordY();
-                        }
-                    }
-
-                    listeVisuelArete.add(new VisuelArete(arete.accesNom(), coordonneeX1, coordonneeY1, coordonneeX2, coordonneeY2, Color.BLACK));
                 }
             }
         });
@@ -118,7 +117,7 @@ public class Graphe extends JPanel {
     public void paintComponent(Graphics g) {
 
         Graphics2D g2D = (Graphics2D) g;
-        g2D.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_ON);
+        g2D.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_OFF);
 
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, 1000, 800);
@@ -136,7 +135,7 @@ public class Graphe extends JPanel {
             g.fillOval(sommet.accesCoordX()-sommet.accesTaille()/2, sommet.accesCoordY()-sommet.accesTaille()/2, sommet.accesTaille(), sommet.accesTaille());
 
             g.setColor(sommet.accesCouleurContour());
-            g.drawOval((sommet.accesCoordX()-sommet.accesTaille()/2)-1, (sommet.accesCoordY()-sommet.accesTaille()/2)-1, sommet.accesTaille()+1, sommet.accesTaille()+1);
+            g.drawOval((sommet.accesCoordX()-sommet.accesTaille()/2), (sommet.accesCoordY()-sommet.accesTaille()/2), sommet.accesTaille(), sommet.accesTaille());
         }
 
 

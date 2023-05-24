@@ -15,19 +15,19 @@ public class TestGraphe {
 
         List<Sommet> listeSommet;
         try {
-            listeSommet = LectureFichier.creerListeSommet("Liste_Sommet_Test.csv");
+            listeSommet = LectureFichier.creerListeSommet("Liste_Sommet.csv");
         } catch (FichierIncorrectException e) {
             throw new RuntimeException(e);
         }
 
         List<Arete> listeArete;
         try {
-            listeArete = LectureFichier.creerListeArete("Liste_Arete_Test.csv", listeSommet);
+            listeArete = LectureFichier.creerListeArete("Liste_Arete.csv", listeSommet);
         } catch (FichierIncorrectException e) {
             throw new RuntimeException(e);
         }
 
-        JFrame fenetre = new JFrame("Test Graphe");
+        JFrame fenetre = new JFrame("Agar.io");
 
         JPanel grapheTest = new Graphe(listeSommet, listeArete, new Dimension(1000, 800));
 
