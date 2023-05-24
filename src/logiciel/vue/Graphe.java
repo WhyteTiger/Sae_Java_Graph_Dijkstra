@@ -16,14 +16,17 @@ import static java.awt.RenderingHints.*;
 public class Graphe extends JPanel {
     private final List<VisuelSommet> listeVisuelSommet;
     private final List<VisuelArete> listeVisuelArete;
+    private final Dimension dimension;
 
 
     public Graphe(List<Sommet> listeSommet, List<Arete> listeArete, Dimension dimension) {
 
-        this.setSize(dimension);
-        this.setPreferredSize(dimension);
-        this.setMinimumSize(dimension);
-        this.setMaximumSize(dimension);
+        this.dimension = dimension;
+
+        this.setSize(this.dimension);
+        this.setPreferredSize(this.dimension);
+        this.setMinimumSize(this.dimension);
+        this.setMaximumSize(this.dimension);
 
         Random alea = new Random();
         listeVisuelSommet = new LinkedList<>();
@@ -79,9 +82,14 @@ public class Graphe extends JPanel {
 
             @Override
             public void mouseDragged(MouseEvent e) {
+
+                boolean unSommetEstSelectionne = false;
+
                 for (VisuelSommet sommet : listeVisuelSommet) {
 
-                    if(e.getX() >= sommet.accesCoordX()-sommet.accesTaille()/2 && e.getX() <= sommet.accesCoordX()+sommet.accesTaille()/2  &&  e.getY() >= sommet.accesCoordY()-sommet.accesTaille()/2 && e.getY() <= sommet.accesCoordY()+sommet.accesTaille()/2){
+                    if(!unSommetEstSelectionne &&  e.getX() >= sommet.accesCoordX()-sommet.accesTaille()/2 && e.getX() <= sommet.accesCoordX()+sommet.accesTaille()/2  &&  e.getY() >= sommet.accesCoordY()-sommet.accesTaille()/2 && e.getY() <= sommet.accesCoordY()+sommet.accesTaille()/2   &&   e.getX() >= sommet.accesTaille()/2 && e.getX() <= dimension.width-sommet.accesTaille()/2  &&  e.getY() >= sommet.accesTaille()/2 && e.getY() <= dimension.height-sommet.accesTaille()/2){
+
+                        unSommetEstSelectionne = true;
 
                         sommet.fixeCoordX(e.getX());
                         sommet.fixeCoordY(e.getY());
@@ -122,7 +130,7 @@ public class Graphe extends JPanel {
         g2D.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_OFF);
 
         g.setColor(Color.WHITE);
-        g.fillRect(0, 0, 1000, 800);
+        g.fillRect(0, 0, dimension.width, dimension.height);
 
         //Print des traits avant les ronds pour que se soit plus beau
         for (VisuelArete arete : listeVisuelArete) {

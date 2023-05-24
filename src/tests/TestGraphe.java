@@ -27,13 +27,15 @@ public class TestGraphe {
             throw new RuntimeException(e);
         }
 
-        JFrame fenetre = new JFrame("Agar.io");
+        JFrame fenetre = new JFrame("Test Graphe");
 
         JPanel grapheTest = new Graphe(listeSommet, listeArete, new Dimension(1000, 800));
 
+        fenetre.setResizable(false);
         fenetre.add(grapheTest);
         fenetre.pack();
         fenetre.setVisible(true);
+        fenetre.setLocationRelativeTo(null);
 
         System.out.println("Fin main");
     }
