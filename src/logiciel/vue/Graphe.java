@@ -80,12 +80,13 @@ public class Graphe extends JPanel {
             @Override
             public void mouseDragged(MouseEvent e) {
                 for (VisuelSommet sommet : listeVisuelSommet) {
-                    System.out.println("2 e X :"+e.getX()+"   e Y :"+e.getY());
+
                     if(e.getX() >= sommet.accesCoordX()-sommet.accesTaille()/2 && e.getX() <= sommet.accesCoordX()+sommet.accesTaille()/2  &&  e.getY() >= sommet.accesCoordY()-sommet.accesTaille()/2 && e.getY() <= sommet.accesCoordY()+sommet.accesTaille()/2){
-                        System.out.println("3 e X :"+e.getX()+"   e Y :"+e.getY());
+
                         sommet.fixeCoordX(e.getX());
                         sommet.fixeCoordY(e.getY());
 
+                        //Recalcule des arrete vu qu'on vient de deplacer un sommet
                         listeVisuelArete.clear();
                         for (Arete arete : listeArete){
 
@@ -116,6 +117,7 @@ public class Graphe extends JPanel {
     @Override
     public void paintComponent(Graphics g) {
 
+        // /!\ TO DO Remmetre l'antialiasing à la fin /!\
         Graphics2D g2D = (Graphics2D) g;
         g2D.setRenderingHint(KEY_ANTIALIASING, VALUE_ANTIALIAS_OFF);
 
@@ -125,15 +127,18 @@ public class Graphe extends JPanel {
         //Print des traits avant les ronds pour que se soit plus beau
         for (VisuelArete arete : listeVisuelArete) {
 
+            //Dessin des aretes
             g.setColor(arete.accesCouleur());
             g.drawLine(arete.accesCoordX1(), arete.accesCoordY1(), arete.accesCoordX2(), arete.accesCoordY2());
         }
 
         for (VisuelSommet sommet : listeVisuelSommet) {
 
+            //Dessin des noeuds
             g.setColor(sommet.accesCouleur());
             g.fillOval(sommet.accesCoordX()-sommet.accesTaille()/2, sommet.accesCoordY()-sommet.accesTaille()/2, sommet.accesTaille(), sommet.accesTaille());
 
+            //Dessin des contour des noeuds ("invisible" de base)
             g.setColor(sommet.accesCouleurContour());
             g.drawOval((sommet.accesCoordX()-sommet.accesTaille()/2), (sommet.accesCoordY()-sommet.accesTaille()/2), sommet.accesTaille(), sommet.accesTaille());
         }
